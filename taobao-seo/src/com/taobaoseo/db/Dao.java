@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import javax.naming.NamingException;
 
-import com.taobaoseo.recommendation.domain.RecommendScope;
+import com.taobaoseo.domain.recommendation.RecommendScope;
 
 
 public class Dao {

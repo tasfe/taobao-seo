@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 
-import com.taobaoseo.recommendation.service.RecommendEngine;
+import com.taobaoseo.service.recommendation.RecommendEngine;
 
 public class MainServlet extends HttpServlet{
 

@@ -1,4 +1,4 @@
-package com.taobaoseo.recommendation.domain;
+package com.taobaoseo.domain.recommendation;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -14,7 +14,7 @@ import com.taobao.api.ApiException;
 import com.taobao.api.domain.Item;
 import com.taobao.api.response.ItemRecommendAddResponse;
 import com.taobao.api.response.ShopRemainshowcaseGetResponse;
-import com.taobaoseo.recommendation.taobao.TaobaoProxy;
+import com.taobaoseo.taobao.TaobaoProxy;
 
 public class RecommendJob implements Job{
 

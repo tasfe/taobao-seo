@@ -1,4 +1,4 @@
-package com.taobaoseo.recommendation.service;
+package com.taobaoseo.service.recommendation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +15,8 @@ import com.taobao.api.ApiException;
 import com.taobao.api.domain.Item;
 import com.taobao.api.response.ItemsListGetResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
-import com.taobaoseo.recommendation.domain.RecommendScope;
-import com.taobaoseo.recommendation.taobao.TaobaoProxy;
+import com.taobaoseo.domain.recommendation.RecommendScope;
+import com.taobaoseo.taobao.TaobaoProxy;
 
 public class RecommendItemsProvider {
 	

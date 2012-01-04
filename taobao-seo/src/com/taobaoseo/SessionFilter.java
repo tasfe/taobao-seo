@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import com.recommendation.Constants;
 import com.taobao.api.internal.util.TaobaoUtils;
 import com.taobaoseo.db.Dao;
-import com.taobaoseo.recommendation.taobao.TaobaoProxy;
+import com.taobaoseo.taobao.TaobaoProxy;
 
 public class SessionFilter implements Filter, Constants{
 

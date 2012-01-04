@@ -3,7 +3,7 @@ package com.taobaoseo.action.recommendation;
 import org.apache.struts2.convention.annotation.Action;
 import org.quartz.SchedulerException;
 
-import com.taobaoseo.recommendation.domain.RecommendScope;
+import com.taobaoseo.domain.recommendation.RecommendScope;
 import com.taobaoseo.servlet.MainServlet;
 
 public class TestAction extends ActionBase{

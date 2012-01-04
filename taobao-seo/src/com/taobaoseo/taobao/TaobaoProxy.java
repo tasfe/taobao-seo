@@ -1,4 +1,4 @@
-package com.taobaoseo.recommendation.taobao;
+package com.taobaoseo.taobao;
 
 import java.util.Date;
 import java.util.List;
@@ -34,6 +34,7 @@ import com.taobao.api.response.ShopRemainshowcaseGetResponse;
 import com.taobao.api.response.UserGetResponse;
 import com.taobao.api.response.VasSubscribeGetResponse;
 import com.taobaoseo.Constants;
+import com.taobaoseo.taobao.TaobaoProxy;
 
 public class TaobaoProxy implements Constants
 {

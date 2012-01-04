@@ -1,4 +1,4 @@
-package com.taobaoseo.recommendation.service;
+package com.taobaoseo.service.recommendation;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,8 +13,8 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 
 import com.taobaoseo.db.Dao;
-import com.taobaoseo.recommendation.domain.RecommendJob;
-import com.taobaoseo.recommendation.domain.RecommendScope;
+import com.taobaoseo.domain.recommendation.RecommendJob;
+import com.taobaoseo.domain.recommendation.RecommendScope;
 
 public class RecommendEngine {
 	

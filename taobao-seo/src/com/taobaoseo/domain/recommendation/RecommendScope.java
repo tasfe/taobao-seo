@@ -1,4 +1,4 @@
-package com.taobaoseo.recommendation.domain;
+package com.taobaoseo.domain.recommendation;
 
 import java.io.Serializable;
 
