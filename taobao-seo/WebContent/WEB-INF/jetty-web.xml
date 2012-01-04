@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <New id="mysql" class="org.eclipse.jetty.plus.jndi.Resource">
+	<Arg></Arg>
+        <Arg>jdbc/taobaoseo</Arg>
+        <Arg>
+            <New class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<Set name="driverClass">com.mysql.jdbc.Driver</Set>
+                <Set name="jdbcUrl">jdbc:mysql://114.80.208.163:3306/taobaoseo?useUnicode=true&amp;characterEncoding=utf8</Set>
+                <Set name="user">root</Set>
+                <Set name="password">masterkey</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>
+

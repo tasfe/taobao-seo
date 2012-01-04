@@ -1,0 +1,30 @@
+<?xml version="1.0"?> 
+
+<project name="taobaoseo" default="deploy"> 
+
+	<!-- properies --> 
+
+	<property name="tomcat" value="D:/apache-tomcat-6.0.29" /> 
+	<!--property name="tomcat" value="D:/green/jetty-hightide-8.0.4.v20111024" /--> 
+	<property name="project" value="taobaoseo" /> 
+	
+	
+	<!-- 编译--> 
+	
+	<target name="jar">
+		<jar destfile="WebContent/WEB-INF/lib/${project}.jar"
+		       basedir="build/classes"
+		  />
+	</target>
+	
+	<target name="deploy" depends="jar"> 
+		<copy todir="${tomcat}/webapps/${project}" overwrite="true">
+			<fileset dir="WebContent"/>
+		</copy>
+	</target> 
+
+	<target name="clean">
+		<delete dir="${tomcat}/webapps/${project}"/>
+	</target>
+
+</project> 
