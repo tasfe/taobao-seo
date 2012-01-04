@@ -1,4 +1,4 @@
-package com.taobaoseo.action.recommendation;
+package com.taobaoseo.action.listing;
 
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;

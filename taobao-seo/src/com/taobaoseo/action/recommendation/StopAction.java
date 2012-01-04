@@ -4,6 +4,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.quartz.SchedulerException;
 
+import com.taobaoseo.action.ActionBase;
 import com.taobaoseo.servlet.MainServlet;
 
 @Results({

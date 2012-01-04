@@ -1,4 +1,4 @@
-package com.taobaoseo.action.recommendation;
+package com.taobaoseo.action;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -11,7 +11,7 @@ import com.taobaoseo.Constants;
 
 public class ActionBase extends ActionSupport implements Constants{
 	
-	static Logger _log = Logger.getLogger(ActionBase.class.getName());
+	public static Logger _log = Logger.getLogger(ActionBase.class.getName());
 	
 	protected static void error(TaobaoResponse rsp)
 	{
