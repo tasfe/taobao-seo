@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>排名优化</title>
+<title>排名优化专家</title>
 	<link rel="stylesheet" href="css/redmond/jquery-ui-1.8.16.custom.css" type="text/css" />
 	<link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/> 
     <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/>

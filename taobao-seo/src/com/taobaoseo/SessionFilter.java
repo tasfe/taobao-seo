@@ -15,8 +15,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
-import com.recommendation.Constants;
 import com.taobao.api.internal.util.TaobaoUtils;
 import com.taobaoseo.db.Dao;
 import com.taobaoseo.taobao.TaobaoProxy;
