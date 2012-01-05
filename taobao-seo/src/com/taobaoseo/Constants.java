@@ -2,8 +2,8 @@ package com.taobaoseo;
 
 public interface Constants {
 
-	String APP_KEY = "12321428";
-	String SECRET = "d76dfdfdba8f979233cc356df6b25164";
+	String APP_KEY = "12467806";
+	String SECRET = "1d16dfdd5255095eb98243c3a214eeb3";
 	String ARTICLE_CODE = "service-0-23009";
 	String ITEM_CODE_1 = "service-0-23009-1";
 	String ITEM_CODE_2 = "service-0-23009-2";

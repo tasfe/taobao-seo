@@ -16,7 +16,7 @@ public class DBUtils
 {
 	static Logger _logger = Logger.getLogger(DBUtils.class.getName());
 
-    public static final String LOCAL_DS_NAME = "jdbc/smart-show-case";
+    public static final String LOCAL_DS_NAME = "jdbc/taobaoseo";
 
     public static Connection getConnection() throws NamingException, SQLException
     {
