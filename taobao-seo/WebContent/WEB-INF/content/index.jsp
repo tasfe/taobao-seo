@@ -24,45 +24,22 @@
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
 	</div>
-	<div class='content span-24 last' >
-		<div class='panel'>
-			<div class='panel-title'>运行状态</div>
-			<div class='panel-content'>
-			<div id='msg-stopped'>自动推荐未启动或者已停止。</div>
-			<div id='msg-running' class='hide'>自动推荐正在运行中。<img src='images/ani-gear.gif'/></div>
-			<button id='start'>启动</button>
-			</div>
-		</div>
-		<div class='panel prepend-top'>
-			<div class='panel-title'>选项</div>
-			<div class='panel-content'>
-				<form>
-				<table>
-					<tr>
-						<td>
-						<label for='mode'>推荐模式</label>
-						</td>
-						<td>
-						<div id='mode'>
-							<input type='radio' name='mode' value='1' checked='checked'>发现橱窗有空缺，则将即将下架的宝贝加入橱窗推荐</input><br/>
-							<input type='radio' name='mode' value='2'>发现即将下架的宝贝（剩余时间小于30分钟），不管橱窗是否空缺，强制加入橱窗推荐（橱窗无空缺时，撤销离下架时间最久的宝贝推荐）</input>
-						</div>
-						</td>
-					</tr>
-					<tr>
-						<td><label for='scope'>待推荐宝贝范围</label></td>
-						<td>
-							<div id='scope'>
-							<input type='radio' name='scope' value='1' checked='checked'>全部宝贝</input><br/>
-							<input type='radio' name='scope' value='2'>指定关键字</input><br/>
-							<input type='radio' name='scope' value='3'>手动选择</input>
-							</div>
-						</td>
-					</tr>
-				</table>
-				</form>
-			</div>
-		</div>
+	<div id="tabs" class="span-24 last">
+		<ul>
+			<s:url action="listing" var="listingLink"></s:url>
+			<li><a href="${listingLink}">上架</a></li>
+			<s:url action="recommendation" var="recommendLink"></s:url>
+			<li><a href="${recommendLink}">推荐</a></li>
+			<li><a href="faq.html">常见问题</a></li>
+			<s:url action="service_info" var="serviceInfoLink"></s:url>
+			<li><a href='${serviceInfoLink}'>服务信息</a></li>
+			<s:if test='#session.admin'>
+				<s:url action="op-by-categories" var="opByCategoriesLink"></s:url>
+				<li><a href="${opByCategoriesLink}">快速操作</a></li>
+				<s:url action="admin" var="adminLink"></s:url>
+				<li><a href="${adminLink}">Admin</a></li>
+			</s:if>
+		</ul>
 	</div>
 	<div id="footer" class="span-24 last prepend-top quiet">
 		<a href="http://seller.taobao.com/fuwu/shopshow/shop_index.htm?page_id=95889&isv_id=62112477&page_rank=2&tab_type=1" target="_blank" class="quiet">道和科技</a>
@@ -70,6 +47,6 @@
 </div>
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script> 
-<script type="text/javascript" src="js/my.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
