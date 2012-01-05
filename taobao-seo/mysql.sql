@@ -1,11 +1,9 @@
 create database taobaoseo DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-use sq_tuqianyi;
-
-DROP TABLE IF EXISTS user_t;
+use taobaoseo;
 
 create table user_t(
-    user_id_c bigint,
-    nick_c varchar(128),
+	user_id_c bigint,
+	nick_c varchar(128),
     session_c varchar(255),
     last_login_c timestamp,
     browser_c varchar(255),
@@ -15,13 +13,13 @@ create table user_t(
 create table mode_t(
 	user_id_c bigint,
 	mode_c smallint,
-	primary key user_id_c
+	primary key (user_id_c)
 );
 
 create table keyword_t(
 	user_id_c bigint,
 	keyword varchar(255),
-	primary key user_id_c bigint
+	primary key (user_id_c)
 );
 
 create table recommending_item_t(
