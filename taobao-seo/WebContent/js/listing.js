@@ -1,8 +1,14 @@
 (function() {
+	var itemData;
+	$.getJSON('listing/items', function(data) {
+			alert(data.items_onsale_get_response.items.item[0].title);
+			itemData = data;
+		}
+	);
+	
 	var millisPerDay = 24 * 60 * 60000;
 	var now = new Date();
 	now.setUTCHours(0, 0, 0, 0);
-	alert(now);
 	var time = now.getTime();
 	var d = [ [time - 6 * millisPerDay, 84.36], 
 	          [time - 5 * millisPerDay, 31.85], 
