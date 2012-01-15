@@ -10,13 +10,20 @@ create table user_t(
     primary key (user_id_c)
 );
 
-create table mode_t(
+create table last_listing_t(
+	num_iid_c bigint,
+	list_time_c datetime,
+	delist_time_c datetime,
+	primary key (num_iid_c)
+);
+
+create table recommend_mode_t(
 	user_id_c bigint,
 	mode_c smallint,
 	primary key (user_id_c)
 );
 
-create table keyword_t(
+create table recommend_keyword_t(
 	user_id_c bigint,
 	keyword varchar(255),
 	primary key (user_id_c)
