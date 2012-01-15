@@ -4,8 +4,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.quartz.SchedulerException;
 
+import com.taobao.api.ApiException;
 import com.taobaoseo.action.ActionBase;
 import com.taobaoseo.service.listing.ListingEngine;
+import com.taobaoseo.service.listing.ListingService;
 
 @Results({
 	@Result(name="success", type="httpheader"),
@@ -19,15 +21,8 @@ public class StartAction extends ActionBase{
 		String nick = getUser();
 		String topSession = getSessionId();
 		try {
-			if (ListingEngine.INSTANCE.isStarted(nick))
-			{
-				ListingEngine.INSTANCE.resume(nick);
-			}
-			else
-			{
-				ListingEngine.INSTANCE.checkList(nick, topSession);
-			}
-		} catch (SchedulerException e) {
+			ListingService.INSTANCE.checkListing(nick, topSession);
+		} catch (ApiException e) {
 			error(e);
 		}
 		_log.info("started...");

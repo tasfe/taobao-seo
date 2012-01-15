@@ -12,8 +12,10 @@ import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.KeyMatcher;
 
 import com.taobaoseo.domain.listing.ListingJob;
+import com.taobaoseo.domain.listing.ListingJobListener;
 import com.taobaoseo.service.recommendation.RecommendEngine;
 
 public class ListingEngine {
@@ -30,40 +32,24 @@ public class ListingEngine {
 		
 	}
 	
-	public void checkList(String nick, String topSession) throws SchedulerException
-	{
-        JobDetail job = JobBuilder.newJob(ListingJob.class)
-            .withIdentity(JOB_NAME, nick)
-            .usingJobData("topSession", topSession)
-            .usingJobData("nick", nick)
-            .build();
-        
-        Trigger trigger = TriggerBuilder.newTrigger()
-            .withIdentity(JOB_NAME, nick)
-            .startNow()
-            .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                    .withIntervalInMinutes(INTERVAL)
-                    .repeatForever())            
-            .build();
-        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-        scheduler.scheduleJob(job, trigger);
-	}
-	
 	public void list(long numIid, long num, Date listTime, String nick, String topSession) throws SchedulerException
 	{
+		String jobName = String.valueOf(numIid);
         JobDetail job = JobBuilder.newJob(ListingJob.class)
-            .withIdentity("listing", nick)
+            .withIdentity(jobName, nick)
             .usingJobData("topSession", topSession)
             .usingJobData("numIid", numIid)
             .usingJobData("num", num)
             .build();
         
         Trigger trigger = TriggerBuilder.newTrigger()
-            .withIdentity(JOB_NAME, nick)
+            .withIdentity(jobName, nick)
             .startAt(listTime)         
             .build();
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.scheduleJob(job, trigger);
+        scheduler.getListenerManager().addJobListener(
+        		new ListingJobListener(), KeyMatcher.keyEquals(JobKey.jobKey(jobName, nick)));
 	}
 	
 	public void pause(String nick) throws SchedulerException
