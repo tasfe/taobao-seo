@@ -24,7 +24,6 @@ import com.taobaoseo.taobao.TaobaoProxy;
 })
 public class ItemsAction extends ActionBase{
 
-	private String json;
 	private Map<Date, Integer> listingCount = new HashMap<Date, Integer>();
 	
 	public String execute()
@@ -50,11 +49,11 @@ public class ItemsAction extends ActionBase{
 		return SUCCESS;
 	}
 
-	public void setJson(String json) {
-		this.json = json;
+	public Map<Date, Integer> getListingCount() {
+		return listingCount;
 	}
 
-	public String getJson() {
-		return json;
+	public void setListingCount(Map<Date, Integer> listingCount) {
+		this.listingCount = listingCount;
 	}
 }

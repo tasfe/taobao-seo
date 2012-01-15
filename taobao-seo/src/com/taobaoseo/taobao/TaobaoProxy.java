@@ -63,6 +63,11 @@ public class TaobaoProxy implements Constants
 		return taobaoClient;
 	}
 	
+	public static TaobaoClient createClient()
+	{
+		return new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
+	}
+	
 	public static User getUser(String session) throws ApiException
 	{
 		UserGetRequest req = new UserGetRequest();

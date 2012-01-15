@@ -1,6 +1,5 @@
 package com.taobaoseo.service.recommendation;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.quartz.JobBuilder;
@@ -11,6 +10,7 @@ import org.quartz.SchedulerException;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 
 import com.taobaoseo.db.Dao;
 import com.taobaoseo.domain.recommendation.RecommendJob;
@@ -21,16 +21,13 @@ public class RecommendEngine {
 	static Logger _logger = Logger.getLogger(RecommendEngine.class.getName());
 
 	public static final int INTERVAL = 5;
-	private Scheduler scheduler;
+	public static final String JOB_NAME = "recommend";
 	
-	public RecommendEngine()
+	public static final RecommendEngine INSTANCE = new RecommendEngine();
+	
+	private RecommendEngine()
 	{
-//		try {
-//			scheduler = StdSchedulerFactory.getDefaultScheduler();
-//			scheduler.start();
-//		} catch (SchedulerException e) {
-//			_logger.log(Level.SEVERE, "", e);
-//		}
+		
 	}
 	
 	public void recommend(String nick, String topSession) throws SchedulerException
@@ -50,36 +47,31 @@ public class RecommendEngine {
                     .withIntervalInSeconds(INTERVAL)
                     .repeatForever())            
             .build();
-        
+        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.scheduleJob(job, trigger);
 	}
 	
 	public void pause(String nick) throws SchedulerException
 	{
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.pauseJob(new JobKey("recommend", nick));
 	}
 	
 	public void resume(String nick) throws SchedulerException
 	{
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.resumeJob(new JobKey("recommend", nick));
 	}
 	
 	public boolean isStarted(String nick) throws SchedulerException
 	{
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		return scheduler.getJobDetail(new JobKey("recommend", nick)) != null;
 	}
 	
 	public void remove(String nick) throws SchedulerException
 	{
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.deleteJob(new JobKey("recommend", nick));
-	}
-	
-	public void shutdown()
-	{
-		try {
-            scheduler.shutdown();
-        } catch (SchedulerException se) {
-        	_logger.log(Level.SEVERE, "", se);
-        }
 	}
 }
