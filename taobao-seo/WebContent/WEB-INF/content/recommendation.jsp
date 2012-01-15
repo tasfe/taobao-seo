@@ -2,17 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <div>
-	<div class='panel'>
+	<div id='recommendation-status' class='panel'>
 		<div class='panel-title'>运行状态</div>
 		<div class='panel-content'>
-			<div id='msg-stopped'>自动推荐未启动或者已停止。</div>
-			<div id='msg-running' class='hide'>
+			<div class='msg-stopped'>自动推荐未启动或者已停止。</div>
+			<div class='msg-running hide'>
 				自动推荐正在运行中。<img src='images/ani-gear.gif' />
 			</div>
-			<button id='start'>启动</button>
+			<button class='start'>启动</button>
 		</div>
 	</div>
-	<div class='panel prepend-top'>
+	<div id='recommendation-options' class='panel prepend-top'>
 		<div class='panel-title'>选项</div>
 		<div class='panel-content'>
 			<form>
@@ -40,3 +40,4 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="js/recommendation.js"></script>

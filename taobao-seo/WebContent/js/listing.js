@@ -1,4 +1,46 @@
 (function() {
+	$("#listing .start").button({
+		icons: {
+			primary: "ui-icon-play"
+		}
+	}).click(function() {
+		if ( $( this ).text() === "启动" ) {
+			$.ajax({
+				url: 'listing/start',
+				success: function( data ) {
+					$('#listing .msg-running').show();
+					$('#listing .msg-stopped').hide();
+					$("#listing .start").button( "option", {
+						label: "停止",
+						icons: {
+							primary: "ui-icon-pause"
+						}
+					});
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					alert(jqXHR.responseText);
+				}
+			});
+		} else {
+			$.ajax({
+				url: 'stop',
+				success: function( data ) {
+					$('#listing .msg-running').hide();
+					$('#listing .msg-stopped').show();
+					$("#listing .start").button( "option", {
+						label: "启动",
+						icons: {
+							primary: "ui-icon-play"
+						}
+					});
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					alert(jqXHR.responseText);
+				}
+			});
+		}
+	});
+	
 	var itemData;
 	$.getJSON('listing/items', function(data) {
 			alert(data.items_onsale_get_response.items.item[0].title);
