@@ -42,7 +42,7 @@
 	});
 	
 	var itemData;
-	$.getJSON('listing/items', function(data) {
+	$.getJSON('listing/listing-status', function(data) {
 			alert(data.items_onsale_get_response.items.item[0].title);
 			itemData = data;
 		}

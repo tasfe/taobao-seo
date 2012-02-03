@@ -26,7 +26,7 @@
 	</div>
 	<div id="tabs" class="span-24 last">
 		<ul>
-			<s:url action="listing" var="listingLink"></s:url>
+			<s:url action="listing/items" var="listingLink"></s:url>
 			<li><a href="${listingLink}">上架</a></li>
 			<s:url action="recommendation" var="recommendLink"></s:url>
 			<li><a href="${recommendLink}">推荐</a></li>

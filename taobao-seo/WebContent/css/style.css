@@ -13,3 +13,5 @@ body{background-color:rgb(195, 217, 255);}
 #faq li{font-size:1.1em;font-weight:bold;color:blue;margin-bottom:5px;}
 #faq p{color:#666}
 .red{color:red;}
+.ui-widget-content a {color:#06C;text-decoration:none;}
+.ui-widget-content a:hover {color:#06C;text-decoration:underline;}
