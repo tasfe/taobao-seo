@@ -96,7 +96,7 @@ public class TaobaoProxy implements Constants
 	public static ItemsOnsaleGetResponse getOnSales(String session, long pageNumber, long pageSize, String sellerCids, String keyWord) throws ApiException
 	{
 		ItemsOnsaleGetRequest req = new ItemsOnsaleGetRequest();
-		req.setFields("num_iid,title,list_time,delist_time");
+		req.setFields("num_iid,title,pic_url,price,list_time,delist_time");
 		if (sellerCids != null)
 		{
 			req.setSellerCids(sellerCids);

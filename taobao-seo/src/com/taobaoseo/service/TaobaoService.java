@@ -36,11 +36,16 @@ public class TaobaoService {
 	
 	public ItemsOnsaleGetResponse getPage(int pageNo, String session) throws ApiException
 	{
+		return getPage((long)PAGE_SIZE, pageNo, session);
+	}
+	
+	public ItemsOnsaleGetResponse getPage(long pageSize, int pageNo, String session) throws ApiException
+	{
 		ItemsOnsaleGetRequest req = new ItemsOnsaleGetRequest();
 		req.setFields("num_iid,title,list_time,delist_time");
 		req.setOrderBy("list_time:desc");
 		req.setPageNo(0L);
-		req.setPageSize((long)PAGE_SIZE);
+		req.setPageSize(pageSize);
 		return TaobaoProxy.getClient().execute(req, session);
 	}
 }
