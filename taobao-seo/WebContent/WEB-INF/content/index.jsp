@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>排名优化专家</title>
 	<link rel="stylesheet" href="css/redmond/jquery-ui-1.8.16.custom.css" type="text/css" />
+	<link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css" type="text/css" />
+	<link rel="stylesheet" href="css/Pager.css" type="text/css" />
 	<link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/> 
     <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/>
     <!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
@@ -46,7 +48,12 @@
 	</div>
 </div>
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script> 
+<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript" src="js/jquery.pager.js" ></script> 
+<script type="text/javascript" src="js/jquery.mytable.js" ></script>
 <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
