@@ -41,9 +41,5 @@
 	</tbody>
 </table>
 <div id="adjust-dialog" title="调整上架时间">
-	<div>
-			<label>开始时间:</label><br/>
-			<input class="text" type="text" name="list_time" value='<s:date name="#attr.defaultStart" format="yyyy-MM-dd HH:mm"/>'/>
-		</div>
 </div>
 <script type="text/javascript" src="js/items.js"></script>

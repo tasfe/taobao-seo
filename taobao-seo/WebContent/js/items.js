@@ -76,17 +76,31 @@
 		return false;
 	});
 	
-	$("#adjust-dialog input[name='list_time']").datetimepicker({
-		stepMinute: 5
-	});
-	
 	$("#adjust-dialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 900
+		width: 400
 	});
 
 	$('.adjust-link').click(function(){
-		$('#adjust-dialog').dialog('open');
+		var numIid= $(this).closest("tr").attr("num_iid");
+		$.ajax({
+			url: 'listing/adjusting',
+			data: {numIid : numIid},
+			type: 'POST',
+			success: function(data) {
+				var $dialog = $('#adjust-dialog');
+				$dialog.html(data);
+				$dialog.dialog('option', 'buttons', {
+					确定 : function(){
+						alert('ok');
+					},
+					取消 : function(){
+						$dialog.dialog('close');
+					}
+				});
+				$dialog.dialog('open');
+			}
+		});
 	});
 })();
