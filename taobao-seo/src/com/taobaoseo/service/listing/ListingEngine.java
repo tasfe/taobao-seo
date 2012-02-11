@@ -8,7 +8,6 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
@@ -52,6 +51,7 @@ public class ListingEngine {
             .withIdentity(jobName, nick)
             .startAt(listTime)         
             .build();
+//        ((AbstractTrigger)trigger).setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY);
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.scheduleJob(job, trigger);
         scheduler.getListenerManager().addJobListener(

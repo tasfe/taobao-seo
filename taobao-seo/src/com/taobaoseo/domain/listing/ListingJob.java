@@ -11,7 +11,9 @@ import org.quartz.JobExecutionException;
 
 import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.request.ItemUpdateDelistingRequest;
 import com.taobao.api.request.ItemUpdateListingRequest;
+import com.taobao.api.response.ItemUpdateDelistingResponse;
 import com.taobao.api.response.ItemUpdateListingResponse;
 import com.taobaoseo.taobao.TaobaoProxy;
 
@@ -28,15 +30,23 @@ public class ListingJob implements Job {
 		Long numIid = dataMap.getLong("numIid");
 		Long num = dataMap.getLong("num");
 		_logger.info("topSession: " + topSession);
+		if (delisting(numIid, topSession))
+		{
+			listing(numIid, num, topSession);
+		}
+	}
+	
+	private boolean delisting(long numIid, String topSession)
+	{
 		try {
-			ItemUpdateListingRequest req = new ItemUpdateListingRequest();
+			ItemUpdateDelistingRequest req = new ItemUpdateDelistingRequest();
 			req.setNumIid(numIid);
-			req.setNum(num);
 			TaobaoClient client = TaobaoProxy.createClient();
-			ItemUpdateListingResponse rsp = client.execute(req, topSession);
+			ItemUpdateDelistingResponse rsp = client.execute(req, topSession);
 			if (rsp.isSuccess())
 			{
-				//todo: mark in db;
+				_logger.info("delisting successfully.");
+				return true;
 			}
 			else
 			{
@@ -45,5 +55,29 @@ public class ListingJob implements Job {
 		} catch (ApiException e) {
 			_logger.log(Level.SEVERE, "", e);
 		}
+		return false;
+	}
+	
+	private boolean listing(long numIid, long num, String topSession)
+	{
+		try {
+			ItemUpdateListingRequest req = new ItemUpdateListingRequest();
+			req.setNumIid(numIid);
+			req.setNum(num);
+			TaobaoClient client = TaobaoProxy.createClient();
+			ItemUpdateListingResponse rsp = client.execute(req, topSession);
+			if (rsp.isSuccess())
+			{
+				_logger.info("listing successfully.");
+				return true;
+			}
+			else
+			{
+				_logger.log(Level.SEVERE, TaobaoProxy.getError(rsp));
+			}
+		} catch (ApiException e) {
+			_logger.log(Level.SEVERE, "", e);
+		}
+		return false;
 	}
 }
