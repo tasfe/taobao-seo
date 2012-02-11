@@ -83,7 +83,7 @@
 	});
 
 	$('.adjust-link').click(function(){
-		var numIid= $(this).closest("tr").attr("num_iid");
+		var numIid = $(this).closest("tr").attr("num_iid");
 		$.ajax({
 			url: 'listing/adjusting',
 			data: {numIid : numIid},
@@ -93,7 +93,22 @@
 				$dialog.html(data);
 				$dialog.dialog('option', 'buttons', {
 					确定 : function(){
-						alert('ok');
+						var num = $('input[name="num"]').val();
+						var listTime = $('input[name="list_time"]').val();
+						$.ajax({
+							url: 'listing/schedule-listing',
+							data: {numIids: numIid, num: num, listTime: listTime},
+							type: 'POST',
+							success: function(data) {
+								$dialog.dialog('close');
+							},
+							error: function(jqXHR, textStatus, errorThrown) {
+								alert(textStatus);
+								var headers = jqXHR.getAllResponseHeaders();
+								alert(headers);
+								alert(errorThrown);
+							}
+						});
 					},
 					取消 : function(){
 						$dialog.dialog('close');

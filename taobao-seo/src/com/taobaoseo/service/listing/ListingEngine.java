@@ -23,13 +23,19 @@ public class ListingEngine {
 	static Logger _logger = Logger.getLogger(RecommendEngine.class.getName());
 
 	public static final int INTERVAL = 5;
-	public static final String JOB_NAME = "checkListing";
 	
 	public static final ListingEngine INSTANCE = new ListingEngine();
 	
 	private ListingEngine()
 	{
 		
+	}
+	
+	public boolean jobExists(long numIid, String nick) throws SchedulerException
+	{
+		String jobName = String.valueOf(numIid);
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+		return scheduler.checkExists(JobKey.jobKey(jobName, nick));
 	}
 	
 	public void list(long numIid, long num, Date listTime, String nick, String topSession) throws SchedulerException
@@ -52,27 +58,27 @@ public class ListingEngine {
         		new ListingJobListener(), KeyMatcher.keyEquals(JobKey.jobKey(jobName, nick)));
 	}
 	
-	public void pause(String nick) throws SchedulerException
+	public void pause(long numIid, String nick) throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.pauseJob(new JobKey(JOB_NAME, nick));
+		scheduler.pauseJob(new JobKey(String.valueOf(numIid), nick));
 	}
 	
-	public void resume(String nick) throws SchedulerException
+	public void resume(long numIid, String nick) throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.resumeJob(new JobKey(JOB_NAME, nick));
+		scheduler.resumeJob(new JobKey(String.valueOf(numIid), nick));
 	}
 	
-	public boolean isStarted(String nick) throws SchedulerException
+	public boolean isStarted(long numIid, String nick) throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		return scheduler.getJobDetail(new JobKey(JOB_NAME, nick)) != null;
+		return scheduler.getJobDetail(new JobKey(String.valueOf(numIid), nick)) != null;
 	}
 	
-	public void remove(String nick) throws SchedulerException
+	public void remove(long numIid, String nick) throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.deleteJob(new JobKey(JOB_NAME, nick));
+		scheduler.deleteJob(new JobKey(String.valueOf(numIid), nick));
 	}
 }
