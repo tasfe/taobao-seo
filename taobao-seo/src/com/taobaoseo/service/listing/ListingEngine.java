@@ -1,16 +1,20 @@
 package com.taobaoseo.service.listing;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.impl.matchers.KeyMatcher;
 
 import com.taobaoseo.domain.listing.ListingJob;
@@ -80,5 +84,20 @@ public class ListingEngine {
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.deleteJob(new JobKey(String.valueOf(numIid), nick));
+	}
+	
+	public List<JobDetail> getJobs() throws SchedulerException
+	{
+		List<JobDetail> jobs = new ArrayList<JobDetail>();
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+		for(String group: scheduler.getJobGroupNames()) {
+		    _logger.info(group);
+		    for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(group))) {
+		        _logger.info("    " + jobKey.getName());
+		        JobDetail job = scheduler.getJobDetail(jobKey);
+		        jobs.add(job);
+		    }
+		}
+		return jobs;
 	}
 }
