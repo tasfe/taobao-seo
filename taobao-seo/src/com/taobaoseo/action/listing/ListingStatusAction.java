@@ -1,6 +1,9 @@
 package com.taobaoseo.action.listing;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,7 @@ import org.apache.struts2.convention.annotation.Results;
 import com.taobao.api.ApiException;
 import com.taobao.api.domain.Item;
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.TaobaoService;
 
 @Results({
@@ -20,7 +24,7 @@ import com.taobaoseo.service.TaobaoService;
 })
 public class ListingStatusAction extends ActionBase{
 
-	private Map<Date, Integer> listingCount = new HashMap<Date, Integer>();
+	private Map<Date, TimedItems> timedItems = new HashMap<Date, TimedItems>();
 	
 	public String execute()
 	{
@@ -32,12 +36,14 @@ public class ListingStatusAction extends ActionBase{
 			{
 				Date listTime = item.getListTime();
 				Date day = DateUtils.truncate(listTime, Calendar.DATE);
-				Integer c = listingCount.get(day);
-				if (c == null)
+				TimedItems tItems = timedItems.get(day);
+				if (tItems == null)
 				{
-					c = 0;
+					tItems = new TimedItems();
+					tItems.setTime(day);
+					timedItems.put(day, tItems);
 				}
-				listingCount.put(day, ++c);
+				tItems.addItem(item);
 			}
 		} catch (ApiException e) {
 			error(e);
@@ -45,11 +51,31 @@ public class ListingStatusAction extends ActionBase{
 		return SUCCESS;
 	}
 
-	public Map<Date, Integer> getListingCount() {
-		return listingCount;
+	public void setTimedItems(Map<Date, TimedItems> timedItems) {
+		this.timedItems = timedItems;
 	}
 
-	public void setListingCount(Map<Date, Integer> listingCount) {
-		this.listingCount = listingCount;
+	public Map<Date, TimedItems> getTimedItems() {
+		return timedItems;
+	}
+
+	public List<Date> getDates()
+	{
+		List<Date> dates = new ArrayList<Date>(timedItems.keySet());
+		Collections.sort(dates);
+		return dates;
+	}
+	
+	public List<TimedItems> getItems()
+	{
+		List<TimedItems> items = new ArrayList<TimedItems>(timedItems.values());
+		Collections.sort(items, new Comparator<TimedItems>() {
+
+			@Override
+			public int compare(TimedItems o1, TimedItems o2) {
+				return o1.getTime().compareTo(o2.getTime());
+			}
+		});
+		return items;
 	}
 }

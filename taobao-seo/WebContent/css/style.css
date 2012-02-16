@@ -20,5 +20,5 @@ table{border:1px solid #ddd;}
 .tabs a{display:block;padding:3px 5px;font-weight:bold;}
 .tabs a:hover, .tabs a.current{background:#fff;}
 .tabs a.current{color:#000;}
-.listing .content {width:750px;float:right;border:none;}
+.listing .content {width:750px;float:right;border:none;padding:0;}
 .aside {width:120px;}
