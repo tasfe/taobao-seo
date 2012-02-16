@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/>
     <!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    
+    <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 </head>
 
 <body>
@@ -28,10 +30,8 @@
 	</div>
 	<div id="tabs" class="span-24 last">
 		<ul>
-			<s:url action="listing/items" var="listingLink"></s:url>
+			<s:url action="listing" var="listingLink"></s:url>
 			<li><a href="${listingLink}">上架</a></li>
-			<s:url action="listing/jobs" var="jobsUrl"></s:url>
-			<li><a href="${jobsUrl}">Jobs</a></li>
 			<s:url action="recommendation" var="recommendLink"></s:url>
 			<li><a href="${recommendLink}">推荐</a></li>
 			<li><a href="faq.html">常见问题</a></li>
@@ -49,7 +49,6 @@
 		<a href="http://seller.taobao.com/fuwu/shopshow/shop_index.htm?page_id=95889&isv_id=62112477&page_rank=2&tab_type=1" target="_blank" class="quiet">道和科技</a>
 	</div>
 </div>
-<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.ui.datepicker-zh-CN.js"></script>
 <script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
