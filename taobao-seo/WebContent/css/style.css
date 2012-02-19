@@ -22,3 +22,4 @@ table{border:1px solid #ddd;}
 .tabs a.current{color:#000;}
 .listing .content {width:750px;float:right;border:none;padding:0;}
 .aside {width:120px;}
+table.grid td{border:1px solid #ddd;}

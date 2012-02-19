@@ -4,6 +4,7 @@
 <div class='listing'>
 	<div class='aside left'>
 		<div class='tabs'>
+			<a href='listing/period-view'>分布图</a>
 			<a href='listing/items'>调整助手</a>
 			<a href='listing-chart'>状态图</a>
 			<a href='listing/jobs'>任务</a>

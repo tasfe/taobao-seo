@@ -1,11 +1,8 @@
 package com.taobaoseo.domain.listing;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import com.taobao.api.domain.Item;
 
@@ -39,7 +36,7 @@ public class TimedItems {
 		items.add(item);
 	}
 	
-	public int itemsCount()
+	public int getItemsCount()
 	{
 		if (items != null)
 		{
@@ -48,28 +45,8 @@ public class TimedItems {
 		return 0;
 	}
 	
-	public List<Item> getHourItems(int hour)
+	public String toString()
 	{
-		List<Item> result = new ArrayList<Item>();
-		for (Item item : items)
-		{
-			Date listTime = item.getListTime();
-			long hours = DateUtils.getFragmentInHours(listTime, Calendar.DAY_OF_YEAR);
-			if (hours == hour)
-			{
-				result.add(item);
-			}
-		}
-		return result;
-	}
-	
-	public List<List<Item>> getHourItemsList()
-	{
-		List<List<Item>> list = new ArrayList<List<Item>>();
-		for (int i = 0; i < 23; i++)
-		{
-			List<Item> items = getHourItems(i);
-		}
-		return list;
+		return getTime() + ": " + getItemsCount();
 	}
 }
