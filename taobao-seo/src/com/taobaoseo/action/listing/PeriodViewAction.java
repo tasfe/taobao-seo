@@ -1,9 +1,7 @@
 package com.taobaoseo.action.listing;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +9,9 @@ import org.apache.commons.lang.time.DateUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.taobao.api.ApiException;
-import com.taobao.api.domain.Item;
 import com.taobaoseo.action.ActionBase;
 import com.taobaoseo.domain.listing.TimedItems;
-import com.taobaoseo.service.TaobaoService;
+import com.taobaoseo.service.listing.ListingService;
 
 @Results({
 	  @Result(location="../period-view.jsp")
@@ -24,38 +20,14 @@ public class PeriodViewAction extends ActionBase{
 
 	private int period = 7;
 	private List<Date> dates;
-	private Map<Date, TimedItems> hourItems = new HashMap<Date, TimedItems>();;
+	private Map<Date, TimedItems> hourItems;
 	private TimedItems[][] itemsMatrix;
 	
 	public String execute()
 	{
-		dates = new ArrayList<Date>();
-		Date now = new Date();
-		for (int i = period -1; i >= 0; i--)
-		{
-			Date date = DateUtils.addDays(now, -i);
-			dates.add(date);
-		}
+		dates = ListingService.INSTANCE.getLastDays(period);
 		String session = getSessionId();
-		try {
-			TaobaoService service = new TaobaoService();
-			List<Item> items = service.getAllOnsaleItems(session);
-			for (Item item : items)
-			{
-				Date listTime = item.getListTime();
-				Date hourTime = DateUtils.truncate(listTime, Calendar.HOUR_OF_DAY);
-				TimedItems tItems = hourItems.get(hourTime);
-				if (tItems == null)
-				{
-					tItems = new TimedItems();
-					tItems.setTime(hourTime);
-					hourItems.put(hourTime, tItems);
-				}
-				tItems.addItem(item);
-			}
-		} catch (ApiException e) {
-			error(e);
-		}
+		hourItems = ListingService.INSTANCE.getHourItems(session);
 		System.out.println(hourItems);
 		itemsMatrix = new TimedItems[24][period];
 		for (int i = 0; i < 24; i++)

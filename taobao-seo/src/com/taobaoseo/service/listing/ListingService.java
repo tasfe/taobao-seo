@@ -1,7 +1,11 @@
 package com.taobaoseo.service.listing;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +17,8 @@ import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.Item;
 import com.taobao.api.request.ItemsOnsaleGetRequest;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
+import com.taobaoseo.domain.listing.TimedItems;
+import com.taobaoseo.service.TaobaoService;
 import com.taobaoseo.taobao.TaobaoProxy;
 
 public class ListingService {
@@ -65,5 +71,42 @@ public class ListingService {
 		{
 			_logger.log(Level.SEVERE, TaobaoProxy.getError(rsp));
 		}
+	}
+	
+	public List<Date> getLastDays(int n)
+	{
+		List<Date> dates = new ArrayList<Date>();
+		Date now = new Date();
+		for (int i = n -1; i >= 0; i--)
+		{
+			Date date = DateUtils.addDays(now, -i);
+			dates.add(date);
+		}
+		return dates;
+	}
+	
+	public Map<Date, TimedItems> getHourItems(String session)
+	{
+		Map<Date, TimedItems> hourItems = new HashMap<Date, TimedItems>();
+		try {
+			TaobaoService service = new TaobaoService();
+			List<Item> items = service.getAllOnsaleItems(session);
+			for (Item item : items)
+			{
+				Date listTime = item.getListTime();
+				Date hourTime = DateUtils.truncate(listTime, Calendar.HOUR_OF_DAY);
+				TimedItems tItems = hourItems.get(hourTime);
+				if (tItems == null)
+				{
+					tItems = new TimedItems();
+					tItems.setTime(hourTime);
+					hourItems.put(hourTime, tItems);
+				}
+				tItems.addItem(item);
+			}
+		} catch (ApiException e) {
+			_logger.log(Level.SEVERE, "");
+		}
+		return hourItems;
 	}
 }
