@@ -1,5 +1,6 @@
 package com.taobaoseo.action.listing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Result;
@@ -9,6 +10,7 @@ import com.taobao.api.domain.Item;
 import com.taobao.api.response.ItemsInventoryGetResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.listing.PlannedItem;
 import com.taobaoseo.taobao.TaobaoProxy;
 import com.taobaoseo.utils.PagingOption;
 import com.taobaoseo.utils.PagingResult;
@@ -20,7 +22,7 @@ public class ItemsAction extends ActionBase{
 
 //	private ItemsFilter filter;
 	private PagingOption option;
-	private PagingResult<Item> pagingItems;
+	private PagingResult<PlannedItem> pagingItems;
 	
 	public String execute() throws Exception {
 		if (option == null)
@@ -68,14 +70,21 @@ public class ItemsAction extends ActionBase{
 		}
 		_log.info("result items: " + resultItems.size());
 		_log.info("total: " + total);
-		pagingItems = new PagingResult<Item>();
-		pagingItems.setItems(resultItems);
+		List<PlannedItem> items = new ArrayList<PlannedItem>();
+		for (Item item : resultItems)
+		{
+			PlannedItem i = new PlannedItem();
+			i.setItem(item);
+			items.add(i);
+		}
+		pagingItems = new PagingResult<PlannedItem>();
+		pagingItems.setItems(items);
 		pagingItems.setTotal(total);
 		pagingItems.setOption(option);
 		return SUCCESS;
 	}
 	
-	public PagingResult<Item> getPagingItems()
+	public PagingResult<PlannedItem> getPagingItems()
 	{
 		return pagingItems;
 	}

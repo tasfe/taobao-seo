@@ -20,17 +20,17 @@
 				<td style='width:20px;'><input type="checkbox" class="selector"></input>
 				</td>
 				<td class='item-main-pic'>
-					<a href='http://item.taobao.com/item.htm?id=<s:property value="numIid"/>' target="_blank">
-						<img class="pic" src='<s:property value="picUrl"/>_80x80.jpg' src_310='<s:property value="picUrl"/>_310x310.jpg' />
+					<a href='http://item.taobao.com/item.htm?id=<s:property value="item.numIid"/>' target="_blank">
+						<img class="pic" src='<s:property value="item.picUrl"/>_80x80.jpg'/>
 					</a>
 				</td>
 				<td class="item-details">
-					<div><s:property value="title"/></div>
-					<div>价格：<s:property value="price"/>元</div>
+					<div><s:property value="item.title"/></div>
+					<div>价格：<s:property value="item.price"/>元</div>
 				</td>
 				<td class="list-time">
-					<div><a href='#'><s:date name="listTime" format="yyyy-MM-dd HH:mm E"/></a></div>
-					<div><a href='#'><s:date name="delistTime" format="yyyy-MM-dd HH:mm E"/></a></div>
+					<div><s:date name="item.listTime" format="M月d日 HH:mm E"/></div>
+					<div><s:date name="plannedListTime" format="M月d日 HH:mm E"/></div>
 				</td>
 				<td class="op">
 					<div><a class="adjust-link" href="#">调整</a></div>

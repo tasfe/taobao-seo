@@ -3,6 +3,7 @@ package com.taobaoseo.service.listing;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.quartz.JobBuilder;
@@ -13,13 +14,19 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.impl.matchers.KeyMatcher;
 
+import com.taobao.api.ApiException;
+import com.taobao.api.domain.Item;
+import com.taobao.api.response.ItemGetResponse;
 import com.taobaoseo.domain.listing.ListingJob;
 import com.taobaoseo.domain.listing.ListingJobListener;
+import com.taobaoseo.domain.listing.PlannedItem;
 import com.taobaoseo.service.recommendation.RecommendEngine;
+import com.taobaoseo.taobao.TaobaoProxy;
 
 public class ListingEngine {
 
@@ -86,18 +93,31 @@ public class ListingEngine {
 		scheduler.deleteJob(new JobKey(String.valueOf(numIid), nick));
 	}
 	
-	public List<JobDetail> getJobs() throws SchedulerException
+	public List<PlannedItem> getPlannedItems() throws SchedulerException
 	{
-		List<JobDetail> jobs = new ArrayList<JobDetail>();
+		List<PlannedItem> plannedItems = new ArrayList<PlannedItem>();
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		for(String group: scheduler.getJobGroupNames()) {
 		    _logger.info(group);
 		    for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(group))) {
 		        _logger.info("    " + jobKey.getName());
-		        JobDetail job = scheduler.getJobDetail(jobKey);
-		        jobs.add(job);
+		        Trigger trigger = scheduler.getTrigger(TriggerKey.triggerKey(jobKey.getName(), jobKey.getGroup()));
+		        Date fireTime = trigger.getStartTime();
+		        PlannedItem plannedItem = new PlannedItem();
+		        ItemGetResponse rsp;
+				try {
+					rsp = TaobaoProxy.getItem(Long.parseLong(jobKey.getName()), "num_iid,title,price,pic_url,list_time");
+					Item item = rsp.getItem();
+					plannedItem.setItem(item);
+			        plannedItem.setPlannedListTime(fireTime);
+			        plannedItems.add(plannedItem);
+				} catch (NumberFormatException e) {
+					_logger.log(Level.SEVERE, "", e);
+				} catch (ApiException e) {
+					_logger.log(Level.SEVERE, "", e);
+				}
 		    }
 		}
-		return jobs;
+		return plannedItems;
 	}
 }

@@ -1,5 +1,6 @@
 package com.taobaoseo.action.listing;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.apache.struts2.convention.annotation.Results;
 
 import com.taobao.api.domain.Item;
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.listing.PlannedItem;
 import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.listing.ListingService;
 import com.taobaoseo.utils.PagingOption;
@@ -24,7 +26,7 @@ public class HourItemsAction extends ActionBase{
 	private Date date;
 	private int hour;
 	private PagingOption option;
-	private PagingResult<Item> pagingItems;
+	private PagingResult<PlannedItem> pagingItems;
 	
 	public String execute() throws Exception {
 		if (option == null)
@@ -40,14 +42,21 @@ public class HourItemsAction extends ActionBase{
 		long total = resultItems.size();
 		_log.info("result items: " + resultItems.size());
 		_log.info("total: " + total);
-		pagingItems = new PagingResult<Item>();
-		pagingItems.setItems(resultItems);
+		List<PlannedItem> items = new ArrayList<PlannedItem>();
+		for (Item item : resultItems)
+		{
+			PlannedItem i = new PlannedItem();
+			i.setItem(item);
+			items.add(i);
+		}
+		pagingItems = new PagingResult<PlannedItem>();
+		pagingItems.setItems(items);
 		pagingItems.setTotal(total);
 		pagingItems.setOption(option);
 		return SUCCESS;
 	}
 	
-	public PagingResult<Item> getPagingItems()
+	public PagingResult<PlannedItem> getPagingItems()
 	{
 		return pagingItems;
 	}

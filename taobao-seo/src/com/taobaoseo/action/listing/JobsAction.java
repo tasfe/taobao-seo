@@ -8,6 +8,7 @@ import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
 
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.listing.PlannedItem;
 import com.taobaoseo.service.listing.ListingEngine;
 
 @Results({
@@ -15,13 +16,12 @@ import com.taobaoseo.service.listing.ListingEngine;
 })
 public class JobsAction extends ActionBase {
 
-	private List<JobDetail> jobs;
+	private List<PlannedItem> plannedItems;
 	
 	public String execute()
 	{
 		try {
-			setJobs(ListingEngine.INSTANCE.getJobs());
-			_log.info("jobs: " + jobs);
+			plannedItems = ListingEngine.INSTANCE.getPlannedItems();
 		} catch (SchedulerException e) {
 			error(e);
 			return ERROR;
@@ -29,11 +29,11 @@ public class JobsAction extends ActionBase {
 		return SUCCESS;
 	}
 
-	public void setJobs(List<JobDetail> jobs) {
-		this.jobs = jobs;
+	public void setPlannedItems(List<PlannedItem> plannedItems) {
+		this.plannedItems = plannedItems;
 	}
 
-	public List<JobDetail> getJobs() {
-		return jobs;
+	public List<PlannedItem> getPlannedItems() {
+		return plannedItems;
 	}
 }
