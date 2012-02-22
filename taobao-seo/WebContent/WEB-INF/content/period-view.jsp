@@ -5,6 +5,18 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <div>
+	<div>
+		<form id='period-form'>
+		<span>
+			有效周期为
+			<select name="period">
+				<option value='7' <s:if test='%{period == 7}'>selected="selected"</s:if>>7</option>
+				<option value='14' <s:if test='%{period == 14}'>selected="selected"</s:if>>14</option>
+			</select>
+			天的宝贝上架时间分布图：
+		</span>
+		</form>
+	</div>
 	<table class='grid'>
 		<thead>
 			<tr>
@@ -21,7 +33,7 @@
 					<td><s:property value="#st.index" />:00</td>
 					<s:iterator value='itemsMatrix[#st.index]'>
 						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>'>
-							<a href='listing/hour-items?date=<s:date name="time"/>&hour=<s:date name="time" format="H"/>'><s:property value='itemsCount'/></a>
+							<a href='listing/hour-items?period=<s:property value='period'/>&date=<s:date name="time"/>&hour=<s:date name="time" format="H"/>'><s:property value='itemsCount'/></a>
 						</td>
 					</s:iterator>
 				</tr>

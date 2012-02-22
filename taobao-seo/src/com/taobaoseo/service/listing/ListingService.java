@@ -85,7 +85,7 @@ public class ListingService {
 		return dates;
 	}
 	
-	public Map<Date, TimedItems> getHourItems(String session)
+	public Map<Date, TimedItems> getHourItems(long period, String session)
 	{
 		Map<Date, TimedItems> hourItems = new HashMap<Date, TimedItems>();
 		try {
@@ -93,16 +93,20 @@ public class ListingService {
 			List<Item> items = service.getAllOnsaleItems(session);
 			for (Item item : items)
 			{
-				Date listTime = item.getListTime();
-				Date hourTime = DateUtils.truncate(listTime, Calendar.HOUR_OF_DAY);
-				TimedItems tItems = hourItems.get(hourTime);
-				if (tItems == null)
+				long p = item.getValidThru();
+				if (p == period)
 				{
-					tItems = new TimedItems();
-					tItems.setTime(hourTime);
-					hourItems.put(hourTime, tItems);
+					Date listTime = item.getListTime();
+					Date hourTime = DateUtils.truncate(listTime, Calendar.HOUR_OF_DAY);
+					TimedItems tItems = hourItems.get(hourTime);
+					if (tItems == null)
+					{
+						tItems = new TimedItems();
+						tItems.setTime(hourTime);
+						hourItems.put(hourTime, tItems);
+					}
+					tItems.addItem(item);
 				}
-				tItems.addItem(item);
 			}
 		} catch (ApiException e) {
 			_logger.log(Level.SEVERE, "");

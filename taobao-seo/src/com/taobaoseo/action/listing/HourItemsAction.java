@@ -23,6 +23,7 @@ import com.taobaoseo.utils.PagingResult;
 })
 public class HourItemsAction extends ActionBase{
 
+	private int period = 7;
 	private Date date;
 	private int hour;
 	private PagingOption option;
@@ -34,7 +35,7 @@ public class HourItemsAction extends ActionBase{
 			option = new PagingOption();
 		}
 		String session = getSessionId();
-		Map<Date, TimedItems> hourItemsMap = ListingService.INSTANCE.getHourItems(session);
+		Map<Date, TimedItems> hourItemsMap = ListingService.INSTANCE.getHourItems(period, session);
 		Date key = DateUtils.truncate(date, Calendar.HOUR_OF_DAY);
 		key = DateUtils.setHours(key, hour);
 		TimedItems hourItems = hourItemsMap.get(key);
@@ -83,5 +84,13 @@ public class HourItemsAction extends ActionBase{
 
 	public int getHour() {
 		return hour;
+	}
+
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+
+	public int getPeriod() {
+		return period;
 	}
 }

@@ -16,7 +16,7 @@
 	</thead>
 	<tbody>
 		<s:iterator value="pagingItems.items">
-			<tr class="drow" num_iid='<s:property value="numIid"/>'>
+			<tr class="drow" num_iid='<s:property value="item.numIid"/>'>
 				<td style='width:20px;'><input type="checkbox" class="selector"></input>
 				</td>
 				<td class='item-main-pic'>

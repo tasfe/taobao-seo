@@ -42,7 +42,7 @@ public class TaobaoService {
 	public ItemsOnsaleGetResponse getPage(long pageSize, int pageNo, String session) throws ApiException
 	{
 		ItemsOnsaleGetRequest req = new ItemsOnsaleGetRequest();
-		req.setFields("num_iid,title,price,pic_url,list_time,delist_time");
+		req.setFields("num_iid,title,price,pic_url,list_time,delist_time,valid_thru");
 		req.setOrderBy("list_time:desc");
 		req.setPageNo(0L);
 		req.setPageSize(pageSize);

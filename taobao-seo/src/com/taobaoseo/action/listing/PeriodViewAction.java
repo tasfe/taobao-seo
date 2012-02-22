@@ -27,7 +27,7 @@ public class PeriodViewAction extends ActionBase{
 	{
 		dates = ListingService.INSTANCE.getLastDays(period);
 		String session = getSessionId();
-		hourItems = ListingService.INSTANCE.getHourItems(session);
+		hourItems = ListingService.INSTANCE.getHourItems(period, session);
 		System.out.println(hourItems);
 		itemsMatrix = new TimedItems[24][period];
 		for (int i = 0; i < 24; i++)
