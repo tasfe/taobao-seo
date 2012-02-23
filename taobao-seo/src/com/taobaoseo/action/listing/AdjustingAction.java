@@ -20,7 +20,7 @@ public class AdjustingAction extends ActionBase{
 	public String execute()
 	{
 		try {
-			ItemGetResponse rsp = TaobaoProxy.getItem(numIid, "num_iid,title,list_time,num");
+			ItemGetResponse rsp = TaobaoProxy.getItem(numIid, "num_iid,title,pic_url,list_time,num");
 			if (rsp.isSuccess())
 			{
 				item = rsp.getItem();
