@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.taobao.api.ApiException;
+import com.taobao.api.FileItem;
 import com.taobao.api.domain.Item;
+import com.taobao.api.request.ItemUpdateRequest;
 import com.taobao.api.request.ItemsOnsaleGetRequest;
+import com.taobao.api.response.ItemUpdateResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.taobaoseo.taobao.TaobaoProxy;
 import com.taobaoseo.utils.PagingResult;
@@ -46,6 +49,16 @@ public class TaobaoService {
 		req.setOrderBy("list_time:desc");
 		req.setPageNo(0L);
 		req.setPageSize(pageSize);
-		return TaobaoProxy.getClient().execute(req, session);
+		return TaobaoProxy.createClient().execute(req, session);
+	}
+	
+	public ItemUpdateResponse updatePeriod(long numIid, long period, String session) throws ApiException
+	{
+		ItemUpdateRequest req = new ItemUpdateRequest();
+		req.setNumIid(numIid);
+		req.setValidThru(period);
+		 
+		ItemUpdateResponse rsp = TaobaoProxy.createClient().execute(req, session);
+		return rsp;
 	}
 }

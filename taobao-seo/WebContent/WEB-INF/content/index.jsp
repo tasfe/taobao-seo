@@ -31,9 +31,9 @@
 	<div id="tabs" class="span-24 last">
 		<ul>
 			<s:url action="listing" var="listingLink"></s:url>
-			<li><a href="${listingLink}">上架</a></li>
+			<li><a href="${listingLink}">上架调整助手</a></li>
 			<s:url action="recommendation" var="recommendLink"></s:url>
-			<li><a href="${recommendLink}">推荐</a></li>
+			<li><a href="${recommendLink}">自动橱窗推荐</a></li>
 			<li><a href="faq.html">常见问题</a></li>
 			<s:url action="service_info" var="serviceInfoLink"></s:url>
 			<li><a href='${serviceInfoLink}'>服务信息</a></li>

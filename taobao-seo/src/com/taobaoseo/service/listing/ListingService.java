@@ -16,6 +16,7 @@ import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.Item;
 import com.taobao.api.request.ItemsOnsaleGetRequest;
+import com.taobao.api.response.ItemUpdateResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.TaobaoService;
@@ -112,5 +113,34 @@ public class ListingService {
 			_logger.log(Level.SEVERE, "");
 		}
 		return hourItems;
+	}
+	
+	public void toPeriod7(String session)
+	{
+		try {
+			TaobaoService service = new TaobaoService();
+			List<Item> items = service.getAllOnsaleItems(session);
+			for (Item item : items)
+			{
+				long p = item.getValidThru();
+				if (p == 14)
+				{
+					try
+					{
+						ItemUpdateResponse rsp = service.updatePeriod(item.getNumIid(), 7, session);
+						if (!rsp.isSuccess())
+						{
+							_logger.info(rsp.getErrorCode() + " - " + rsp.getMsg() + " - " + rsp.getSubCode() + " - " + rsp.getSubMsg());
+						}
+					}
+					catch (ApiException e)
+					{
+						_logger.log(Level.SEVERE, "");
+					}
+				}
+			}
+		} catch (ApiException e) {
+			_logger.log(Level.SEVERE, "");
+		}
 	}
 }

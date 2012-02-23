@@ -15,6 +15,9 @@
 			</select>
 			天的宝贝上架时间分布图：
 		</span>
+		<s:if test='%{period == 14}'>
+			<a id='all-to-period7' class='right'>全部改为7天有效周期</a>
+		</s:if>
 		</form>
 	</div>
 	<table class='grid'>

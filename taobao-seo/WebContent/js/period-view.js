@@ -22,4 +22,23 @@
 			}
 		});
 	});
+	
+	
+	$('#all-to-period7').button().click(function(){
+		$.ajax({
+			url:'listing/change-period',
+			success: function()
+			{
+				$.ajax({
+					url:'listing/period-view',
+					data:{period: 7},
+					success: function(data)
+					{
+						$('.listing .content').html(data);
+					}
+				});
+			}
+		});
+		return false;
+	});
 })();
