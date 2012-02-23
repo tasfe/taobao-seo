@@ -16,7 +16,7 @@
 	</thead>
 	<tbody>
 		<s:iterator value="plannedItems">
-			<tr class="drow" num_iid='<s:property value="numIid"/>'>
+			<tr class="drow" num_iid='<s:property value="item.numIid"/>'>
 				<td style='width:20px;'><input type="checkbox" class="selector"></input>
 				</td>
 				<td class='item-main-pic'>
@@ -33,10 +33,10 @@
 					<div><s:date name="plannedListTime" format="M月d日 HH:mm E"/></div>
 				</td>
 				<td class="op">
-					<div><a class="adjust-link" href="#">调整</a></div>
-					<div><a class="cancel-adjust-link" href="#">取消调整</a></div>
+					<div><a class="cancel-job-link" href="#">取消调整任务</a></div>
 				</td>
 			</tr>
 		</s:iterator>
 	</tbody>
 </table>
+<script type="text/javascript" src="js/jobs.js"></script>

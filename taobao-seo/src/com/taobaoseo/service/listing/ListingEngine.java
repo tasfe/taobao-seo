@@ -89,6 +89,7 @@ public class ListingEngine {
 	
 	public void remove(long numIid, String nick) throws SchedulerException
 	{
+		_logger.info("cancelling job: " + numIid + ":" + nick);
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.deleteJob(new JobKey(String.valueOf(numIid), nick));
 	}
