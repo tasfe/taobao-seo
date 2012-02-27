@@ -29,12 +29,17 @@
 					<div>价格：<s:property value="item.price"/>元</div>
 				</td>
 				<td class="list-time">
-					<div><s:date name="item.listTime" format="M月d日 HH:mm E"/></div>
-					<div><s:date name="plannedListTime" format="M月d日 HH:mm E"/></div>
+					<div title='原上架时间'><s:date name="item.listTime" format="M月d日 HH:mm E"/></div>
+					<div title='调整后上架时间'><s:date name="plannedListTime" format="M月d日 HH:mm E"/></div>
 				</td>
 				<td class="op">
-					<div><a class="adjust-link" href="#">调整</a></div>
-					<div><a class="cancel-adjust-link" href="#">取消调整</a></div>
+					<s:if test='%{plannedListTime == null}'>
+						<div><a class="adjust-link" href="#">调整</a></div>
+					</s:if>
+					<s:else>
+						<div><a class="change-adjust-link" href="#">修改</a></div>
+						<div><a class="cancel-adjust-link" href="#">取消</a></div>
+					</s:else>
 				</td>
 			</tr>
 		</s:iterator>

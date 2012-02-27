@@ -121,4 +121,15 @@ public class ListingEngine {
 		}
 		return plannedItems;
 	}
+	
+	public Date getFireTime(long numIid, String nick) throws SchedulerException
+	{
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+		Trigger trigger = scheduler.getTrigger(TriggerKey.triggerKey(String.valueOf(numIid), nick));
+		if (trigger != null)
+		{
+			return trigger.getStartTime();
+		}
+		return null;
+	}
 }

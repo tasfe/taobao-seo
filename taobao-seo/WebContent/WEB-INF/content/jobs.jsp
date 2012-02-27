@@ -33,7 +33,7 @@
 					<div><s:date name="plannedListTime" format="M月d日 HH:mm E"/></div>
 				</td>
 				<td class="op">
-					<div><a class="cancel-job-link" href="#">取消调整任务</a></div>
+					<div><a class="cancel-job-link" href="#">取消</a></div>
 				</td>
 			</tr>
 		</s:iterator>

@@ -14,6 +14,7 @@ import com.taobao.api.domain.Item;
 import com.taobaoseo.action.ActionBase;
 import com.taobaoseo.domain.listing.PlannedItem;
 import com.taobaoseo.domain.listing.TimedItems;
+import com.taobaoseo.service.listing.ListingEngine;
 import com.taobaoseo.service.listing.ListingService;
 import com.taobaoseo.utils.PagingOption;
 import com.taobaoseo.utils.PagingResult;
@@ -35,6 +36,7 @@ public class HourItemsAction extends ActionBase{
 			option = new PagingOption();
 		}
 		String session = getSessionId();
+		String nick = getUser();
 		Map<Date, TimedItems> hourItemsMap = ListingService.INSTANCE.getHourItems(period, session);
 		Date key = DateUtils.truncate(date, Calendar.HOUR_OF_DAY);
 		key = DateUtils.setHours(key, hour);
@@ -48,6 +50,7 @@ public class HourItemsAction extends ActionBase{
 		{
 			PlannedItem i = new PlannedItem();
 			i.setItem(item);
+			i.setPlannedListTime(ListingEngine.INSTANCE.getFireTime(item.getNumIid(), nick));
 			items.add(i);
 		}
 		pagingItems = new PagingResult<PlannedItem>();

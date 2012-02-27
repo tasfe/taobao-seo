@@ -24,57 +24,6 @@
 	}
 	
 	$("#items-table").mytable({selectionChanged: selectionChanged});
-	$(".add-label-link").click(function(){
-		var currentItem = $(this).closest("tr").attr("num_iid");
-		var $dialog = $("#label-dialog");
-		var url = "merging.action";
-		var q = "numIids=" + currentItem;
-		$.ajax({
-			url: url,
-			data: q,
-			type: 'POST',
-			success: function(data) {
-				$dialog.html(data);
-				$dialog.dialog("option", "buttons", {
-					确定: function() {
-						var merges = getMerges();
-						if (!merges)
-						{
-							alert("未改变原图。");
-							return false;
-						}
-						showProcessingDialog();
-						var url = 'merge.action';
-						var q = 'numIids=' + currentItem + merges;
-						$.ajax({
-							url: url,
-							data: q,
-							type: 'POST',
-							success: function(data){
-								hideProcessingDialog();
-								if ((data == 'ok'))
-								{
-									$dialog.dialog('close');
-									reload();
-								}
-								else
-								{
-									alert(data);
-								}
-							}
-						});
-						return false;
-					},
-					取消: function() {
-						$(this).dialog( "close" );
-						return false;
-					}
-				});
-				$dialog.dialog("open");
-			}
-		});
-		return false;
-	});
 	
 	$("#adjust-dialog").dialog({
 		autoOpen: false,
@@ -117,5 +66,6 @@
 				$dialog.dialog('open');
 			}
 		});
+		return false;
 	});
 })();

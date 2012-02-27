@@ -7,7 +7,7 @@
 <div>
 	<div>
 		<form id='period-form'>
-		<span>
+		<span class="strong">
 			有效周期为
 			<select name="period">
 				<option value='7' <s:if test='%{period == 7}'>selected="selected"</s:if>>7</option>
