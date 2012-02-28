@@ -41,4 +41,14 @@
 		});
 		return false;
 	});
+	
+	$('td').hover(function(){
+		$('.add-tool', this).show();
+	}, function(){
+		$('.add-tool', this).hide();
+	});
+	
+	$('.add-tool').click(function(){
+		alert("Add items to this period.");
+	});
 })();

@@ -35,7 +35,8 @@
 				<tr>
 					<td><s:property value="#st.index" />:00</td>
 					<s:iterator value='itemsMatrix[#st.index]'>
-						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>'>
+						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>' style='position:relative;'>
+							<div title='添加商品到这个时段' class='add-tool hide' style='position:absolute;top:0;right:0;cursor:pointer;'>+</div>
 							<a href='listing/hour-items?period=<s:property value='period'/>&date=<s:date name="time"/>&hour=<s:date name="time" format="H"/>'><s:property value='itemsCount'/></a>
 						</td>
 					</s:iterator>
