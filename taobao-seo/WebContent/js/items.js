@@ -32,39 +32,59 @@
 	});
 
 	$('.adjust-link').click(function(){
-		var numIid = $(this).closest("tr").attr("num_iid");
-		$.ajax({
-			url: 'listing/adjusting',
-			data: {numIid : numIid},
-			type: 'POST',
-			success: function(data) {
-				var $dialog = $('#adjust-dialog');
-				$dialog.html(data);
-				$dialog.dialog('option', 'buttons', {
-					确定 : function(){
-						var listTime = $('input[name="list_time"]').val();
-						$.ajax({
-							url: 'listing/schedule-listing',
-							data: {numIids: numIid, listTime: listTime},
-							type: 'POST',
-							success: function(data) {
-								$dialog.dialog('close');
-							},
-							error: function(jqXHR, textStatus, errorThrown) {
-								alert(textStatus);
-								var headers = jqXHR.getAllResponseHeaders();
-								alert(headers);
-								alert(errorThrown);
-							}
-						});
-					},
-					取消 : function(){
-						$dialog.dialog('close');
-					}
-				});
-				$dialog.dialog('open');
-			}
-		});
+		var $tr = $(this).closest("tr");
+		$('.editor', $tr).show();
+		var dayOfWeek = $('td.list-time', $tr).attr('day-of-week');
+		$('option', $tr).removeAttr('selected');
+		$('option[value="' + dayOfWeek + '"]', $tr).attr('selected', 'selected');
+//		var numIid = $(this).closest("tr").attr("num_iid");
+//		$.ajax({
+//			url: 'listing/adjusting',
+//			data: {numIid : numIid},
+//			type: 'POST',
+//			success: function(data) {
+//				var $dialog = $('#adjust-dialog');
+//				$dialog.html(data);
+//				$dialog.dialog('option', 'buttons', {
+//					确定 : function(){
+//						var listTime = $('input[name="list_time"]').val();
+//						$.ajax({
+//							url: 'listing/schedule-listing',
+//							data: {numIids: numIid, listTime: listTime},
+//							type: 'POST',
+//							success: function(data) {
+//								$dialog.dialog('close');
+//							},
+//							error: function(jqXHR, textStatus, errorThrown) {
+//								alert(textStatus);
+//								var headers = jqXHR.getAllResponseHeaders();
+//								alert(headers);
+//								alert(errorThrown);
+//							}
+//						});
+//					},
+//					取消 : function(){
+//						$dialog.dialog('close');
+//					}
+//				});
+//				$dialog.dialog('open');
+//			}
+//		});
+		return false;
+	});
+	
+	$('button.ok').click(function(){
+		var $editor = $(this).closest('.editor');
+		var dayOfWeek = $('select', $editor).val();
+		var time = $('input', $editor).val();
+		aler('dayOfWeek: ' + dayOfWeek + ', time: ' + time);
+		$editor.hide();
+		return false;
+	});
+	
+	$('button.cancel').click(function(){
+		var $editor = $(this).closest('.editor');
+		$editor.hide();
 		return false;
 	});
 })();

@@ -11,6 +11,7 @@
 			<th>主图</th>
 			<th>基本信息</th>
 			<th>上架时间</th>
+			<th>执行时间</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -29,8 +30,11 @@
 					<div>价格：<s:property value="item.price"/>元</div>
 				</td>
 				<td class="list-time">
-					<div><s:date name="item.listTime" format="M月d日 HH:mm E"/></div>
-					<div><s:date name="plannedListTime" format="M月d日 HH:mm E"/></div>
+					<div><s:date name="item.listTime" format="E HH:mm"/></div>
+					<div><s:date name="plannedListTime" format="E HH:mm"/></div>
+				</td>
+				<td class="list-time">
+					<div><s:date name="plannedListTime" format="M月d日 HH:mm"/></div>
 				</td>
 				<td class="op">
 					<div><a class="cancel-job-link" href="#">取消</a></div>

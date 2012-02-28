@@ -1,5 +1,6 @@
 package com.taobaoseo.domain.listing;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import com.taobao.api.domain.Item;
@@ -23,5 +24,26 @@ public class PlannedItem{
 
 	public Item getItem() {
 		return item;
+	}
+	
+	public int getDayOfWeek()
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(item.getListTime());
+		return cld.get(Calendar.DAY_OF_WEEK);
+	}
+	
+	public int getHour()
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(item.getListTime());
+		return cld.get(Calendar.HOUR_OF_DAY);
+	}
+	
+	public int getMinute()
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(item.getListTime());
+		return cld.get(Calendar.MINUTE);
 	}
 }
