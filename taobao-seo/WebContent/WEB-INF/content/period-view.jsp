@@ -25,7 +25,7 @@
 			<tr>
 				<th>时间</th>
 				<c:forEach var="date" items="${dates}">
-					<th><fmt:formatDate value='${date}' pattern="M月dd日"/><br/>
+					<th title='<fmt:formatDate value="${date}" pattern="M月dd日"/>'>
 					<fmt:formatDate value='${date}' pattern="E"/></th>
 				</c:forEach>
 			</tr>

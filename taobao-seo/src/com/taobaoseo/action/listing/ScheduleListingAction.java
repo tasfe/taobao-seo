@@ -6,8 +6,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.quartz.SchedulerException;
 
+import com.taobao.api.response.ItemGetResponse;
 import com.taobaoseo.action.ActionBase;
 import com.taobaoseo.service.listing.ListingEngine;
+import com.taobaoseo.taobao.TaobaoProxy;
 
 @Results({
 	@Result(name="success", type="httpheader", params={"status", "200"}),
@@ -16,12 +18,11 @@ import com.taobaoseo.service.listing.ListingEngine;
 public class ScheduleListingAction extends ActionBase{
 
 	private String numIids;
-	private long num;
 	private Date listTime;
 	
 	public String execute()
 	{
-		_log.info("numIids: " + numIids + ", num: " + num + ", listTime: " + listTime);
+		_log.info("numIids: " + numIids + ", listTime: " + listTime);
 		long numIid = Long.parseLong(numIids);
 		String nick = getUser();
 		String topSession = getSessionId();
@@ -30,7 +31,7 @@ public class ScheduleListingAction extends ActionBase{
 			{
 				ListingEngine.INSTANCE.remove(numIid, nick);
 			}
-			ListingEngine.INSTANCE.list(numIid, num, listTime, nick, topSession);
+			ListingEngine.INSTANCE.list(numIid, listTime, nick, topSession);
 		} catch (SchedulerException e) {
 			error(e);
 			return ERROR;
@@ -52,13 +53,5 @@ public class ScheduleListingAction extends ActionBase{
 
 	public Date getListTime() {
 		return listTime;
-	}
-
-	public void setNum(long num) {
-		this.num = num;
-	}
-
-	public long getNum() {
-		return num;
 	}
 }

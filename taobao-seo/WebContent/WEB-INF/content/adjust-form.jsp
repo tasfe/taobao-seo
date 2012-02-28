@@ -7,13 +7,12 @@
 		<div class="left">
 			<div>标题: <s:property value="item.title"/></div>
 			<div>数量: <s:property value="item.num"/></div>
-			<div>上架时间: <s:date name="item.listTime" format="yyyy-MM-dd HH:mm E"/></div>
 		</div>
 		<div class='clear' style='height:10px;'></div>
 	</div>
 	<div>
-		<label>调整数量:</label><br/>
-		<div><input class='text' type="text" name="num" value='<s:property value="item.num"/>'/></div>
+		<label>上架时间:</label><br/>
+		<span class='strong'><s:date name="item.listTime" format="yyyy-MM-dd HH:mm E"/></span>
 	</div>
 	<div>
 		<label>调整时间:</label><br/>

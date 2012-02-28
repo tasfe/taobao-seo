@@ -58,7 +58,7 @@ public class ListingService {
 					{
 						Date listTime = new Date(last.getListTime().getTime() + 7 * DateUtils.MILLIS_PER_DAY/total);
 						try {
-							ListingEngine.INSTANCE.list(item.getNumIid(), item.getNum(), listTime, nick, topSession);
+							ListingEngine.INSTANCE.list(item.getNumIid(), listTime, nick, topSession);
 						} catch (SchedulerException e) {
 							_logger.log(Level.SEVERE, "", e);
 						}

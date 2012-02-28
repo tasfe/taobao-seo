@@ -42,11 +42,10 @@
 				$dialog.html(data);
 				$dialog.dialog('option', 'buttons', {
 					确定 : function(){
-						var num = $('input[name="num"]').val();
 						var listTime = $('input[name="list_time"]').val();
 						$.ajax({
 							url: 'listing/schedule-listing',
-							data: {numIids: numIid, num: num, listTime: listTime},
+							data: {numIids: numIid, listTime: listTime},
 							type: 'POST',
 							success: function(data) {
 								$dialog.dialog('close');

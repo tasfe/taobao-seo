@@ -13,6 +13,7 @@ import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.request.ItemUpdateDelistingRequest;
 import com.taobao.api.request.ItemUpdateListingRequest;
+import com.taobao.api.response.ItemGetResponse;
 import com.taobao.api.response.ItemUpdateDelistingResponse;
 import com.taobao.api.response.ItemUpdateListingResponse;
 import com.taobaoseo.taobao.TaobaoProxy;
@@ -28,11 +29,23 @@ public class ListingJob implements Job {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 		String topSession = dataMap.getString("topSession");
 		Long numIid = dataMap.getLong("numIid");
-		Long num = dataMap.getLong("num");
-		_logger.info("topSession: " + topSession);
-		if (delisting(numIid, topSession))
-		{
-			listing(numIid, num, topSession);
+		try {
+			ItemGetResponse rsp = TaobaoProxy.getItem(numIid, "num");
+			if (rsp.isSuccess())
+			{
+				long num = rsp.getItem().getNum();
+				_logger.info("topSession: " + topSession);
+				if (delisting(numIid, topSession))
+				{
+					listing(numIid, num, topSession);
+				}
+			}
+			else
+			{
+				_logger.log(Level.SEVERE, TaobaoProxy.getError(rsp));
+			}
+		} catch (ApiException e) {
+			_logger.log(Level.SEVERE, "", e);
 		}
 	}
 	

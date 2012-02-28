@@ -1,6 +1,8 @@
 package com.taobaoseo.action.listing;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,31 @@ public class PeriodViewAction extends ActionBase{
 	public String execute()
 	{
 		dates = ListingService.INSTANCE.getLastDays(period);
+		if (period == 7)
+		{
+			Collections.sort(dates, new Comparator<Date>()
+			{
+				@Override
+				public int compare(Date date1, Date date2) {
+					Calendar cal1 = Calendar.getInstance();
+					cal1.setTime(date1);
+					int weekday1 = cal1.get(Calendar.DAY_OF_WEEK);
+					Calendar cal2 = Calendar.getInstance();
+					cal2.setTime(date2);
+					int weekday2 = cal2.get(Calendar.DAY_OF_WEEK);
+					if (weekday1 == 1)
+					{
+						return 1;
+					}
+					if (weekday2 == 1)
+					{
+						return -1;
+					}
+					return weekday1 - weekday2;
+				}
+				
+			});
+		}
 		String session = getSessionId();
 		hourItems = ListingService.INSTANCE.getHourItems(period, session);
 		System.out.println(hourItems);
