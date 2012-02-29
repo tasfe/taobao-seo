@@ -143,4 +143,19 @@ public class ListingService {
 			_logger.log(Level.SEVERE, "");
 		}
 	}
+	
+	public Date calculateNewListTime(Date oldListTime, int dayOfWeek, int hour, int minute)
+	{
+		Calendar cld1 = Calendar.getInstance();
+		cld1.setTime(oldListTime);
+		cld1.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+		cld1.set(Calendar.HOUR_OF_DAY, hour);
+		cld1.set(Calendar.MINUTE, minute);
+		Date time = cld1.getTime();
+		if (time.before(new Date()))
+		{
+			cld1.add(Calendar.DATE, 7);
+		}
+		return cld1.getTime();
+	}
 }

@@ -77,8 +77,22 @@
 		var $editor = $(this).closest('.editor');
 		var dayOfWeek = $('select', $editor).val();
 		var time = $('input', $editor).val();
-		aler('dayOfWeek: ' + dayOfWeek + ', time: ' + time);
-		$editor.hide();
+		alert('dayOfWeek: ' + dayOfWeek + ', time: ' + time);
+		var numIid = $(this).closest("tr").attr("num_iid");
+		$.ajax({
+			url: 'listing/schedule-listing',
+			data: {numIids: numIid, dayOfWeek: dayOfWeek, time: time},
+			type: 'POST',
+			success: function(data) {
+				$editor.hide();
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(textStatus);
+				var headers = jqXHR.getAllResponseHeaders();
+				alert(headers);
+				alert(errorThrown);
+			}
+		});
 		return false;
 	});
 	

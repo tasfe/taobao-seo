@@ -33,7 +33,7 @@
 					<div><s:date name="item.listTime" format="E HH:mm"/></div>
 					<div><s:date name="plannedListTime" format="E HH:mm"/></div>
 				</td>
-				<td class="list-time">
+				<td class="plan-time">
 					<div><s:date name="plannedListTime" format="M月d日 HH:mm"/></div>
 				</td>
 				<td class="op">

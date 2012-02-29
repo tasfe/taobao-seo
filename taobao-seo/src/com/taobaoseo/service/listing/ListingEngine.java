@@ -1,6 +1,8 @@
 package com.taobaoseo.service.listing;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -118,6 +120,14 @@ public class ListingEngine {
 				}
 		    }
 		}
+		Collections.sort(plannedItems, new Comparator<PlannedItem>(){
+
+			@Override
+			public int compare(PlannedItem item1, PlannedItem item2) {
+				return item1.getPlannedListTime().compareTo(item2.getPlannedListTime());
+			}
+			
+		});
 		return plannedItems;
 	}
 	
