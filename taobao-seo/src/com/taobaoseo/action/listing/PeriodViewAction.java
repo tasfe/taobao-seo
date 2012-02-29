@@ -24,6 +24,7 @@ public class PeriodViewAction extends ActionBase{
 	private List<Date> dates;
 	private Map<Date, TimedItems> hourItems;
 	private TimedItems[][] itemsMatrix;
+	private boolean[] itemRow;
 	
 	public String execute()
 	{
@@ -57,14 +58,21 @@ public class PeriodViewAction extends ActionBase{
 		hourItems = ListingService.INSTANCE.getHourItems(period, session);
 		System.out.println(hourItems);
 		itemsMatrix = new TimedItems[24][period];
+		itemRow = new boolean[24];
 		for (int i = 0; i < 24; i++)
 		{
+			boolean hasItem = false;
 			for (int j = 0; j < period; j++)
 			{
 				Date day = DateUtils.truncate(dates.get(j), Calendar.HOUR_OF_DAY);
 				Date date = DateUtils.setHours(day, i);
 				itemsMatrix[i][j] = hourItems.get(date);
+				if (itemsMatrix[i][j] != null)
+				{
+					hasItem = true;
+				}
 			}
+			itemRow[i] = hasItem;
 		}
 		print();
 		return SUCCESS;
@@ -75,6 +83,7 @@ public class PeriodViewAction extends ActionBase{
 		for (int i = 0; i < 24; i++)
 		{
 			System.out.println();
+			System.out.println(itemRow[i] + "\t");
 			for (int j = 0; j < period; j++)
 			{
 				System.out.print(itemsMatrix[i][j] + "\t");
@@ -100,5 +109,13 @@ public class PeriodViewAction extends ActionBase{
 
 	public TimedItems[][] getItemsMatrix() {
 		return itemsMatrix;
+	}
+
+	public void setItemRow(boolean[] itemRow) {
+		this.itemRow = itemRow;
+	}
+
+	public boolean[] getItemRow() {
+		return itemRow;
 	}
 }

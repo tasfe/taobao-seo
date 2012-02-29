@@ -77,7 +77,6 @@
 		var $editor = $(this).closest('.editor');
 		var dayOfWeek = $('select', $editor).val();
 		var time = $('input', $editor).val();
-		alert('dayOfWeek: ' + dayOfWeek + ', time: ' + time);
 		var numIid = $(this).closest("tr").attr("num_iid");
 		$.ajax({
 			url: 'listing/schedule-listing',

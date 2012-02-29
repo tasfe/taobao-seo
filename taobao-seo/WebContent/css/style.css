@@ -27,3 +27,5 @@ table.grid th,table.grid td{border:1px solid #ddd;text-align:center;}
 table.grid a{font-weight:bold;}
 td.list-time{width:250px;}
 td.op{width:70px;}
+.period-view tbody tr td{background:#fff;}
+.period-view tbody tr.has-item td{background:#E5ECF9;}

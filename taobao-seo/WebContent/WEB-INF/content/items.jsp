@@ -30,7 +30,7 @@
 				</td>
 				<td class="list-time" day-of-week='<s:property value="dayOfWeek"/>'>
 					<div title='原上架时间'><s:date name="item.listTime" format="E HH:mm"/></div>
-					<div title='调整后上架时间'><s:date name="plannedListTime" format="E HH:mm"/></div>
+					<div title='调整后上架时间' style='color:blue;'><s:date name="plannedListTime" format="E HH:mm"/></div>
 					<div class='editor hide'>
 						<select>
 							<option value='2'>星期一</option>
