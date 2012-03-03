@@ -60,4 +60,4 @@
 </table>
 <div id="adjust-dialog" title="调整上架时间">
 </div>
-<script type="text/javascript" src="js/items.js"></script>
+<script type="text/javascript" src="js/listing-items.js"></script>

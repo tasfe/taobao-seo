@@ -37,5 +37,4 @@
 		</s:iterator>
 	</tbody>
 </table>
-</div>
 <script type="text/javascript" src="js/items.js"></script>
