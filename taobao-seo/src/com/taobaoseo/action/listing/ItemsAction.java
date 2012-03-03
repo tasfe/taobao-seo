@@ -10,6 +10,7 @@ import com.taobao.api.domain.Item;
 import com.taobao.api.response.ItemsInventoryGetResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.ItemsFilter;
 import com.taobaoseo.domain.listing.PlannedItem;
 import com.taobaoseo.taobao.TaobaoProxy;
 import com.taobaoseo.utils.PagingOption;
@@ -20,7 +21,7 @@ import com.taobaoseo.utils.PagingResult;
 })
 public class ItemsAction extends ActionBase{
 
-//	private ItemsFilter filter;
+	private ItemsFilter filter;
 	private PagingOption option;
 	private PagingResult<PlannedItem> pagingItems;
 	
@@ -29,16 +30,16 @@ public class ItemsAction extends ActionBase{
 		{
 			option = new PagingOption();
 		}
-//		if (filter == null)
-//		{
-//			filter = new ItemsFilter();
-//		}
+		if (filter == null)
+		{
+			filter = new ItemsFilter();
+		}
 		String topSession = getSessionId();
 		List<Item> resultItems = null;
 		long total = 0;
-		if (false)//filter.getSaleStatus() == ItemsFilter.STATUS_INVENTORY)
+		if (filter.getSaleStatus() == ItemsFilter.STATUS_INVENTORY)
 		{
-			ItemsInventoryGetResponse rsp = TaobaoProxy.getInventory(topSession, option.getCurrentPage() + 1, option.getLimit(), null, null, null);//filter.getBanner(), filter.getSellerCids(), filter.getKeyWord());
+			ItemsInventoryGetResponse rsp = TaobaoProxy.getInventory(topSession, option.getCurrentPage() + 1, option.getLimit(), filter.getBanner(), filter.getSellerCids(), filter.getKeyWord());
 			if (rsp.isSuccess())
 			{
 				resultItems = rsp.getItems();
@@ -54,7 +55,7 @@ public class ItemsAction extends ActionBase{
 		}
 		else
 		{
-			ItemsOnsaleGetResponse rsp = TaobaoProxy.getOnSales(topSession, option.getCurrentPage() + 1, option.getLimit(), null, null);//filter.getSellerCids(), filter.getKeyWord());
+			ItemsOnsaleGetResponse rsp = TaobaoProxy.getOnSales(topSession, option.getCurrentPage() + 1, option.getLimit(), filter.getSellerCids(), filter.getKeyWord());
 			if (rsp.isSuccess())
 			{
 				resultItems = rsp.getItems();
@@ -89,13 +90,13 @@ public class ItemsAction extends ActionBase{
 		return pagingItems;
 	}
 
-//	public void setFilter(ItemsFilter filter) {
-//		this.filter= filter;
-//	}
-//
-//	public ItemsFilter getFilter() {
-//		return filter;
-//	}
+	public void setFilter(ItemsFilter filter) {
+		this.filter= filter;
+	}
+
+	public ItemsFilter getFilter() {
+		return filter;
+	}
 	
 	public void setOption(PagingOption option) {
 		this.option = option;

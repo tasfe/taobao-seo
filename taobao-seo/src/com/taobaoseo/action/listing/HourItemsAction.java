@@ -20,7 +20,7 @@ import com.taobaoseo.utils.PagingOption;
 import com.taobaoseo.utils.PagingResult;
 
 @Results({
-	  @Result(location="../items.jsp")
+	  @Result(location="../listing-items.jsp")
 })
 public class HourItemsAction extends ActionBase{
 

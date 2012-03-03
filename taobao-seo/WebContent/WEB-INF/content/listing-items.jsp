@@ -3,9 +3,7 @@
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<table id="items-table" page-size='<s:property value="option.limit" />'
-	pages='<s:property value="pagingItems.totalPages" />' 
-	pageIndex='<s:property value="pagingItems.currentPage" />'>
+<table id="items-table" pages='<s:property value="pagingItems.totalPages" />' pageIndex='<s:property value="pagingItems.currentPage" />'>
 	<thead>
 		<tr>
 			<th><input type="checkbox" class="selector"></input>
@@ -13,6 +11,7 @@
 			<th>主图</th>
 			<th>基本信息</th>
 			<th>上架时间</th>
+			<th>操作</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,13 +28,36 @@
 					<div><s:property value="item.title"/></div>
 					<div>价格：<s:property value="item.price"/>元</div>
 				</td>
-				<td>
+				<td class="list-time" day-of-week='<s:property value="dayOfWeek"/>'>
 					<div title='原上架时间'><s:date name="item.listTime" format="E HH:mm"/></div>
 					<div title='调整后上架时间' style='color:blue;'><s:date name="plannedListTime" format="E HH:mm"/></div>
+					<div class='editor hide'>
+						<select>
+							<option value='2'>星期一</option>
+							<option value='3'>星期二</option>
+							<option value='4'>星期三</option>
+							<option value='5'>星期四</option>
+							<option value='6'>星期五</option>
+							<option value='7'>星期六</option>
+							<option value='1'>星期日</option>
+						</select>
+						<input value='<s:date name="item.listTime" format="HH:mm"/>' style='width:45px;'></input>
+						<button class='ok'>确定</button><button class='cancel'>取消</button>
+					</div>
+				</td>
+				<td class="op">
+					<s:if test='%{plannedListTime == null}'>
+						<div><a class="adjust-link" href="#">调整</a></div>
+					</s:if>
+					<s:else>
+						<div><a class="change-adjust-link" href="#">修改</a></div>
+						<div><a class="cancel-adjust-link" href="#">取消</a></div>
+					</s:else>
 				</td>
 			</tr>
 		</s:iterator>
 	</tbody>
 </table>
+<div id="adjust-dialog" title="调整上架时间">
 </div>
 <script type="text/javascript" src="js/items.js"></script>
