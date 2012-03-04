@@ -18,6 +18,9 @@
 		<s:if test='%{period == 14}'>
 			<a id='all-to-period7' class='right'>全部改为7天有效周期</a>
 		</s:if>
+		<s:else>
+			<a id='well-distribute-all' class='right'>均匀化所有时段</a>
+		</s:else>
 		</form>
 	</div>
 	<table class='grid'>
@@ -37,7 +40,10 @@
 					<s:iterator value='itemsMatrix[#st.index]'>
 						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>' style='position:relative;'>
 							<s:if test='%{period == 7}'>
-								<div title='添加商品到这个时段' class='add-tool hide' style='position:absolute;top:0;right:0;cursor:pointer;'>+</div>
+								<div class='tools hide' style='position:absolute;top:0;right:0;'>
+									<span title='均匀化这个时段' class='distribute-tool' style='cursor:pointer;'>=</span>
+									<span title='添加商品到这个时段' class='add-tool' style='cursor:pointer;'>+</span>
+								</div>
 							</s:if>
 							<a href='listing/hour-items?period=<s:property value='period'/>&date=<s:date name="time"/>&hour=<s:date name="time" format="H"/>'><s:property value='itemsCount'/></a>
 						</td>
@@ -47,4 +53,5 @@
 		</tbody>
 	</table>
 </div>
+<div id='dialog'></div>
 <script type="text/javascript" src="js/period-view.js"></script>

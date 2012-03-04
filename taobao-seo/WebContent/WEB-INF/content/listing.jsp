@@ -5,9 +5,10 @@
 	<div class='aside left'>
 		<div class='tabs'>
 			<a href='listing/period-view'>上架分布</a>
+			<a href='listing-chart'>预期分布</a>
 			<a href='listing/jobs'>调整任务</a>
+			<a href='listing/jobs'>任务日志</a>
 			<a href='listing-chart'>状态图</a>
-			<a href='listing/items-selector'>选择器</a>
 		</div>
 	</div>
 	<div class='content'>
