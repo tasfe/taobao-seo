@@ -37,8 +37,11 @@
 			<s:iterator value='itemsMatrix' status='st'>
 				<tr <s:if test='itemRow[#st.index]'>class='has-item'</s:if>>
 					<td><s:property value="#st.index" />:00</td>
-					<s:iterator value='itemsMatrix[#st.index]'>
-						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>' style='position:relative;'>
+					<s:iterator value='itemsMatrix[#st.index]' status='weekSt'>
+						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>' 
+							time='<s:property value="#st.index" />:00'
+							day-of-week='<s:property value="#weekSt.index + 2" />' 
+							style='position:relative;'>
 							<s:if test='%{period == 7}'>
 								<div class='tools hide' style='position:absolute;top:0;right:0;'>
 									<span title='均匀化这个时段' class='distribute-tool' style='cursor:pointer;'>=</span>

@@ -78,6 +78,9 @@
 	});
 	
 	$('.add-tool').click(function(e){
+		var $td = $(this).closest('td');
+		var time = $td.attr('time');
+		var dayOfWeek = $td.attr('day-of-week');
 		$.ajax({
 			url: 'listing/items-selector',
 			type: 'POST',
@@ -86,10 +89,14 @@
 				$dialog.html(data);
 				$dialog.dialog('option', 'buttons', {
 					确定 : function(){
-						var listTime = $('input[name="list_time"]').val();
+						var selectedItems = '';
+						var selectedRows = $('#selected-items tr', $dialog);
+						selectedRows.each(function(){
+							selectedItems = selectedItems + $(this).attr('num_iid') + ',';
+						});
 						$.ajax({
 							url: 'listing/schedule-listing',
-							data: {numIids: numIid, listTime: listTime},
+							data: {numIids: selectedItems, dayOfWeek: dayOfWeek, time: time},
 							type: 'POST',
 							success: function(data) {
 								$dialog.dialog('close');
@@ -105,7 +112,7 @@
 					取消 : function(){
 						$dialog.dialog('close');
 					}
-				})
+				});
 				$dialog.dialog('open');;
 			}
 		});

@@ -135,10 +135,10 @@ public class TaobaoProxy implements Constants
 		return rsp;
 	}
 	
-	public static ItemsListGetResponse getItems(String numIids, String session) throws ApiException
+	public static ItemsListGetResponse getItems(String numIids, String fields, String session) throws ApiException
 	{
 		ItemsListGetRequest req = new ItemsListGetRequest();
-		req.setFields("num_iid,title,pic_url,price,delist_time");
+		req.setFields(fields);
 		req.setNumIids(numIids);
 		return taobaoClient.execute(req, session);
 	}

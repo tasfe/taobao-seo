@@ -67,7 +67,7 @@ public class RecommendItemsProvider {
 			String[] page = Arrays.copyOfRange(numIidArray, from, to);
 			String partialNumIids = StringUtils.join(page, ",");
 			try {
-				ItemsListGetResponse rsp = TaobaoProxy.getItems(partialNumIids, session);
+				ItemsListGetResponse rsp = TaobaoProxy.getItems(partialNumIids, "num_iid,title,pic_url,price,delist_time", session);
 				if (rsp.isSuccess())
 				{
 					List<Item> list = rsp.getItems();
