@@ -4,11 +4,10 @@
 <div class='listing'>
 	<div class='aside left'>
 		<div class='tabs'>
-			<a href='listing/period-view'>上架分布</a>
+			<a href='listing/period-view'>当前分布</a>
 			<a href='listing-chart'>预期分布</a>
-			<a href='listing/jobs'>调整任务</a>
-			<a href='listing/jobs'>任务日志</a>
-			<a href='listing-chart'>状态图</a>
+			<a href='listing/jobs'>任务列表</a>
+			<a href='listing/jobs'>调整日志</a>
 		</div>
 	</div>
 	<div class='content'>
