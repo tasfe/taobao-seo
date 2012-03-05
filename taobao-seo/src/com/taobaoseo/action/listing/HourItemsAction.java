@@ -31,6 +31,8 @@ public class HourItemsAction extends ActionBase{
 	private PagingResult<PlannedItem> pagingItems;
 	
 	public String execute() throws Exception {
+		_log.info("date: " + date);
+		_log.info("hour: " + hour);
 		if (option == null)
 		{
 			option = new PagingOption();

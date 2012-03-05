@@ -73,7 +73,16 @@
 	});
 	
 	$('.distribute-tool').click(function(e){
-		alert("well distribute thid period.");
+		var $td = $(this).closest('td');
+		var hour = $td.attr('datetime');
+		$.ajax({
+			url: 'listing/well-distribute',
+			data: {hour: hour},
+			type: 'POST',
+			success: function(data){
+				$('.listing .content').html(data);
+			}
+		});
 		return false;
 	});
 	

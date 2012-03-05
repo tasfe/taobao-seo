@@ -27,6 +27,7 @@ public class ScheduleListingAction extends ActionBase{
 	private String numIids;
 	private int dayOfWeek;
 	private String time;
+	private boolean wellDistribute;
 	private static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	
 	public String execute()
@@ -53,11 +54,17 @@ public class ScheduleListingAction extends ActionBase{
 				minute++;
 			}
 			String[] numIidArray = StringUtils.split(numIids, ',');
-			for(String strNumIid : numIidArray)
+			int interval = 0;
+			if (wellDistribute)
 			{
+				interval = 60 / numIidArray.length;
+			}
+			for(int i = 0; i < numIidArray.length; i++)
+			{
+				String strNumIid = numIidArray[i];
 				try {
 					long numIid = Long.parseLong(strNumIid);
-					scheduleListing(numIid, dayOfWeek, hour, minute);
+					scheduleListing(numIid, dayOfWeek, hour, minute + i * interval);
 				} catch (ApiException e) {
 					error(e);
 				}catch (Exception e) {
@@ -122,5 +129,13 @@ public class ScheduleListingAction extends ActionBase{
 
 	public String getTime() {
 		return time;
+	}
+
+	public void setWellDistribute(boolean wellDistribute) {
+		this.wellDistribute = wellDistribute;
+	}
+
+	public boolean isWellDistribute() {
+		return wellDistribute;
 	}
 }

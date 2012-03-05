@@ -38,7 +38,8 @@
 				<tr <s:if test='itemRow[#st.index]'>class='has-item'</s:if>>
 					<td><s:property value="#st.index" />:00</td>
 					<s:iterator value='itemsMatrix[#st.index]' status='weekSt'>
-						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>' 
+						<td title='<s:date name="time" format="M月dd日 HH:mm E"/>'
+							datetime='<s:date name="time"/>' 
 							time='<s:property value="#st.index" />:00'
 							day-of-week='<s:property value="#weekSt.index + 2" />' 
 							style='position:relative;'>
