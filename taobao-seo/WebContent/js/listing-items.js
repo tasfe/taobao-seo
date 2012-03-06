@@ -31,45 +31,12 @@
 		width: 400
 	});
 
-	$('.adjust-link').click(function(){
+	$('a.adjust-link, a.change-job').click(function(){
 		var $tr = $(this).closest("tr");
 		$('.editor', $tr).show();
 		var dayOfWeek = $('td.list-time', $tr).attr('day-of-week');
 		$('option', $tr).removeAttr('selected');
 		$('option[value="' + dayOfWeek + '"]', $tr).attr('selected', 'selected');
-//		var numIid = $(this).closest("tr").attr("num_iid");
-//		$.ajax({
-//			url: 'listing/adjusting',
-//			data: {numIid : numIid},
-//			type: 'POST',
-//			success: function(data) {
-//				var $dialog = $('#adjust-dialog');
-//				$dialog.html(data);
-//				$dialog.dialog('option', 'buttons', {
-//					确定 : function(){
-//						var listTime = $('input[name="list_time"]').val();
-//						$.ajax({
-//							url: 'listing/schedule-listing',
-//							data: {numIids: numIid, listTime: listTime},
-//							type: 'POST',
-//							success: function(data) {
-//								$dialog.dialog('close');
-//							},
-//							error: function(jqXHR, textStatus, errorThrown) {
-//								alert(textStatus);
-//								var headers = jqXHR.getAllResponseHeaders();
-//								alert(headers);
-//								alert(errorThrown);
-//							}
-//						});
-//					},
-//					取消 : function(){
-//						$dialog.dialog('close');
-//					}
-//				});
-//				$dialog.dialog('open');
-//			}
-//		});
 		return false;
 	});
 	
@@ -83,7 +50,8 @@
 			data: {numIids: numIid, dayOfWeek: dayOfWeek, time: time},
 			type: 'POST',
 			success: function(data) {
-				$editor.hide();
+				$tr = $editor.closest('tr');
+				refresh($tr);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus);
@@ -100,4 +68,49 @@
 		$editor.hide();
 		return false;
 	});
+	
+	$('a.cancel-job').click(function(){
+		var $tr = $(this).closest("tr");
+		var numIid = $tr.attr("num_iid");
+		$.ajax({
+			url: 'listing/cancel-job',
+			data: {numIid: numIid},
+			type: 'POST',
+			success: function(data) {
+				refresh($tr);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(textStatus);
+				var headers = jqXHR.getAllResponseHeaders();
+				alert(headers);
+				alert(errorThrown);
+			}
+		});
+		return false;
+	});
+	
+	function refresh($tr)
+	{
+		var $table = $tr.closest('table');
+		var dayOfWeek = $table.attr('day-of-week');
+		var hour = $table.attr('hour');
+		var expected = $table.attr('expected');
+		$.ajax({
+			url: 'listing/hour-items',
+			data: {
+				expected: expected, 
+				'listHour.dayOfWeek': dayOfWeek, 
+				'listHour.hour': hour},
+			type: 'POST',
+			success: function(data) {
+				$('.listing .content').html(data);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(textStatus);
+				var headers = jqXHR.getAllResponseHeaders();
+				alert(headers);
+				alert(errorThrown);
+			}
+		});
+	}
 })();

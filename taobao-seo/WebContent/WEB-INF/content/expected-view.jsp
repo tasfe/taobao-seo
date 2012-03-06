@@ -20,8 +20,8 @@
 				<tr <s:if test='itemRow[#st.index]'>class='has-item'</s:if>>
 					<td><s:property value="#st.index" />:00</td>
 					<s:iterator value='itemsMatrix[#st.index]' status='weekSt'>
-						<td time='<s:property value="#st.index" />:00'
-							day-of-week='<s:property value="#weekSt.index + 2" />' 
+						<td day-of-week='<s:property value="listHour.dayOfWeek" />'
+							hour='<s:property value="listHour.hour" />' 
 							style='position:relative;'>
 							<s:if test='%{period == 7}'>
 								<div class='tools hide' style='position:absolute;top:0;right:0;'>

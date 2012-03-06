@@ -39,22 +39,25 @@ public class HourItemsAction extends ActionBase{
 		Map<ListHour, TimedItems> hourItemsMap = 
 			expected ? ListingService.INSTANCE.getExpectedItems(nick, session) : ListingService.INSTANCE.getHourItems(period, session);
 		TimedItems hourItems = hourItemsMap.get(listHour);
-		List<Item> resultItems = hourItems.getItems();
-		long total = resultItems.size();
-		_log.info("result items: " + resultItems.size());
-		_log.info("total: " + total);
-		List<PlannedItem> items = new ArrayList<PlannedItem>();
-		for (Item item : resultItems)
+		if (hourItems != null)
 		{
-			PlannedItem i = new PlannedItem();
-			i.setItem(item);
-			i.setPlannedListTime(ListingEngine.INSTANCE.getFireTime(item.getNumIid(), nick));
-			items.add(i);
+			List<Item> resultItems = hourItems.getItems();
+			long total = resultItems.size();
+			_log.info("result items: " + resultItems.size());
+			_log.info("total: " + total);
+			List<PlannedItem> items = new ArrayList<PlannedItem>();
+			for (Item item : resultItems)
+			{
+				PlannedItem i = new PlannedItem();
+				i.setItem(item);
+				i.setPlannedListTime(ListingEngine.INSTANCE.getFireTime(item.getNumIid(), nick));
+				items.add(i);
+			}
+			pagingItems = new PagingResult<PlannedItem>();
+			pagingItems.setItems(items);
+			pagingItems.setTotal(total);
+			pagingItems.setOption(option);
 		}
-		pagingItems = new PagingResult<PlannedItem>();
-		pagingItems.setItems(items);
-		pagingItems.setTotal(total);
-		pagingItems.setOption(option);
 		return SUCCESS;
 	}
 	

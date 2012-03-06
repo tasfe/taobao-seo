@@ -3,7 +3,11 @@
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<table id="items-table" pages='<s:property value="pagingItems.totalPages" />' pageIndex='<s:property value="pagingItems.currentPage" />'>
+<table id="items-table" pages='<s:property value="pagingItems.totalPages" />' 
+	pageIndex='<s:property value="pagingItems.currentPage" />'
+	day-of-week='<s:property value="listHour.dayOfWeek"/>'
+	hour='<s:property value="listHour.hour"/>'
+	expected='<s:property value="expected"/>'>
 	<thead>
 		<tr>
 			<th><input type="checkbox" class="selector"></input>
@@ -30,7 +34,7 @@
 				</td>
 				<td class="list-time" day-of-week='<s:property value="dayOfWeek"/>'>
 					<div title='原上架时间'><s:date name="item.listTime" format="E HH:mm"/></div>
-					<div title='调整后上架时间' style='color:blue;'><s:date name="plannedListTime" format="E HH:mm"/></div>
+					<div class='adjust-time' title='调整后上架时间' style='color:blue;'><s:date name="plannedListTime" format="E HH:mm"/></div>
 					<div class='editor hide'>
 						<select>
 							<option value='2'>星期一</option>
@@ -50,8 +54,8 @@
 						<div><a class="adjust-link" href="#">调整</a></div>
 					</s:if>
 					<s:else>
-						<div><a class="change-adjust-link" href="#">修改</a></div>
-						<div><a class="cancel-adjust-link" href="#">取消</a></div>
+						<div><a class="change-job" href="#">修改</a></div>
+						<div><a class="cancel-job" href="#">取消</a></div>
 					</s:else>
 				</td>
 			</tr>
