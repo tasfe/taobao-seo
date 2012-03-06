@@ -11,23 +11,24 @@ import org.quartz.SchedulerException;
 
 import com.taobao.api.domain.Item;
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.listing.ListHour;
 import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.listing.ListingEngine;
 import com.taobaoseo.service.listing.ListingService;
 
 @Results({
-	  @Result(type="redirect", location="/listing/hour-items", params={"date", "${hour}", "hour", "${hourTime}"})
+	  @Result(type="redirect", location="/listing/hour-items", params={"listHour.dayOfWeek", "${listHour.dayOfWeek}", "listHour.hour", "${listHour.hour}"})
 })
 public class WellDistributeAction extends ActionBase{
 
-	private Date hour;
+	private ListHour listHour;
 	
 	public String execute()
 	{
-		_log.info("hour: " + hour);
+		_log.info("hour: " + listHour);
 		String session = getSessionId();
-		Map<Date, TimedItems> hourItemsMap = ListingService.INSTANCE.getHourItems(7, session);
-		TimedItems hourItems = hourItemsMap.get(hour);
+		Map<ListHour, TimedItems> hourItemsMap = ListingService.INSTANCE.getHourItems(7, session);
+		TimedItems hourItems = hourItemsMap.get(listHour);
 		List<Item> resultItems = hourItems.getItems();
 		int interval = 60 / resultItems.size();
 		_log.info("interval: " + interval);
@@ -38,7 +39,9 @@ public class WellDistributeAction extends ActionBase{
 			String nick = getUser();
 			String topSession = getSessionId();
 			Calendar cld = Calendar.getInstance();
-			cld.setTime(hour);
+			cld.setTime(item.getListTime());
+			cld.set(Calendar.DAY_OF_WEEK, listHour.getDayOfWeek());
+			cld.set(Calendar.HOUR_OF_DAY, listHour.getHour());
 			cld.set(Calendar.MINUTE, i * interval);
 			Date newListTime = cld.getTime();
 			if (newListTime.before(new Date()))
@@ -59,18 +62,11 @@ public class WellDistributeAction extends ActionBase{
 		return SUCCESS;
 	}
 
-	public void setHour(Date hour) {
-		this.hour = hour;
+	public void setListHour(ListHour listHour) {
+		this.listHour = listHour;
 	}
 
-	public Date getHour() {
-		return hour;
-	}
-	
-	public int getHourTime()
-	{
-		Calendar cld = Calendar.getInstance();
-		cld.setTime(hour);
-		return cld.get(Calendar.HOUR_OF_DAY);
+	public ListHour getListHour() {
+		return listHour;
 	}
 }

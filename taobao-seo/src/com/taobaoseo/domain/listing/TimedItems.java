@@ -8,7 +8,7 @@ import com.taobao.api.domain.Item;
 
 public class TimedItems {
 
-	private Date time;
+	private ListHour listHour;
 	private List<Item> items;
 	
 	public void setItems(List<Item> items) {
@@ -17,14 +17,6 @@ public class TimedItems {
 
 	public List<Item> getItems() {
 		return items;
-	}
-	
-	public void setTime(Date time) {
-		this.time = time;
-	}
-	
-	public Date getTime() {
-		return time;
 	}
 	
 	public synchronized void addItem(Item item)
@@ -47,6 +39,14 @@ public class TimedItems {
 	
 	public String toString()
 	{
-		return getTime() + ": " + getItemsCount();
+		return listHour + ": " + getItemsCount();
+	}
+
+	public void setListHour(ListHour listHour) {
+		this.listHour = listHour;
+	}
+
+	public ListHour getListHour() {
+		return listHour;
 	}
 }

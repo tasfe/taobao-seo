@@ -74,10 +74,11 @@
 	
 	$('.distribute-tool').click(function(e){
 		var $td = $(this).closest('td');
-		var hour = $td.attr('datetime');
+		var dayOfWeek = $td.attr('day-of-week');
+		var hour = $td.attr('hour');
 		$.ajax({
 			url: 'listing/well-distribute',
-			data: {hour: hour},
+			data: {'listHour.dayOfWeek': dayOfWeek, 'listHour.hour': hour},
 			type: 'POST',
 			success: function(data){
 				$('.listing .content').html(data);

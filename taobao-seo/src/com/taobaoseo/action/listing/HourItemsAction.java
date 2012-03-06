@@ -1,17 +1,15 @@
 package com.taobaoseo.action.listing;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.taobao.api.domain.Item;
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.listing.ListHour;
 import com.taobaoseo.domain.listing.PlannedItem;
 import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.listing.ListingEngine;
@@ -24,25 +22,23 @@ import com.taobaoseo.utils.PagingResult;
 })
 public class HourItemsAction extends ActionBase{
 
+	private boolean expected;
 	private int period = 7;
-	private Date date;
-	private int hour;
+	private ListHour listHour;
 	private PagingOption option;
 	private PagingResult<PlannedItem> pagingItems;
 	
 	public String execute() throws Exception {
-		_log.info("date: " + date);
-		_log.info("hour: " + hour);
+		_log.info("listHour: " + listHour);
 		if (option == null)
 		{
 			option = new PagingOption();
 		}
 		String session = getSessionId();
 		String nick = getUser();
-		Map<Date, TimedItems> hourItemsMap = ListingService.INSTANCE.getHourItems(period, session);
-		Date key = DateUtils.truncate(date, Calendar.HOUR_OF_DAY);
-		key = DateUtils.setHours(key, hour);
-		TimedItems hourItems = hourItemsMap.get(key);
+		Map<ListHour, TimedItems> hourItemsMap = 
+			expected ? ListingService.INSTANCE.getExpectedItems(nick, session) : ListingService.INSTANCE.getHourItems(period, session);
+		TimedItems hourItems = hourItemsMap.get(listHour);
 		List<Item> resultItems = hourItems.getItems();
 		long total = resultItems.size();
 		_log.info("result items: " + resultItems.size());
@@ -75,27 +71,27 @@ public class HourItemsAction extends ActionBase{
 		return option;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
-
-	public int getHour() {
-		return hour;
-	}
-
 	public void setPeriod(int period) {
 		this.period = period;
 	}
 
 	public int getPeriod() {
 		return period;
+	}
+
+	public void setListHour(ListHour listHour) {
+		this.listHour = listHour;
+	}
+
+	public ListHour getListHour() {
+		return listHour;
+	}
+
+	public void setExpected(boolean expected) {
+		this.expected = expected;
+	}
+
+	public boolean isExpected() {
+		return expected;
 	}
 }

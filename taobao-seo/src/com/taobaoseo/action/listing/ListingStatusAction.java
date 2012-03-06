@@ -16,15 +16,17 @@ import org.apache.struts2.convention.annotation.Results;
 import com.taobao.api.ApiException;
 import com.taobao.api.domain.Item;
 import com.taobaoseo.action.ActionBase;
+import com.taobaoseo.domain.listing.ListHour;
 import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.TaobaoService;
+import com.taobaoseo.service.listing.ListingService;
 
 @Results({
 	  @Result(location="../json.jsp")
 })
 public class ListingStatusAction extends ActionBase{
 
-	private Map<Date, TimedItems> timedItems = new HashMap<Date, TimedItems>();
+	private Map<ListHour, TimedItems> timedItems = new HashMap<ListHour, TimedItems>();
 	
 	public String execute()
 	{
@@ -35,13 +37,13 @@ public class ListingStatusAction extends ActionBase{
 			for (Item item : items)
 			{
 				Date listTime = item.getListTime();
-				Date day = DateUtils.truncate(listTime, Calendar.DATE);
-				TimedItems tItems = timedItems.get(day);
+				ListHour listHour = ListingService.INSTANCE.getListHour(listTime);
+				TimedItems tItems = timedItems.get(listHour);
 				if (tItems == null)
 				{
 					tItems = new TimedItems();
-					tItems.setTime(day);
-					timedItems.put(day, tItems);
+					tItems.setListHour(listHour);
+					timedItems.put(listHour, tItems);
 				}
 				tItems.addItem(item);
 			}
@@ -49,33 +51,5 @@ public class ListingStatusAction extends ActionBase{
 			error(e);
 		}
 		return SUCCESS;
-	}
-
-	public void setTimedItems(Map<Date, TimedItems> timedItems) {
-		this.timedItems = timedItems;
-	}
-
-	public Map<Date, TimedItems> getTimedItems() {
-		return timedItems;
-	}
-
-	public List<Date> getDates()
-	{
-		List<Date> dates = new ArrayList<Date>(timedItems.keySet());
-		Collections.sort(dates);
-		return dates;
-	}
-	
-	public List<TimedItems> getItems()
-	{
-		List<TimedItems> items = new ArrayList<TimedItems>(timedItems.values());
-		Collections.sort(items, new Comparator<TimedItems>() {
-
-			@Override
-			public int compare(TimedItems o1, TimedItems o2) {
-				return o1.getTime().compareTo(o2.getTime());
-			}
-		});
-		return items;
 	}
 }

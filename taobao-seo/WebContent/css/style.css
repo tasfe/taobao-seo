@@ -23,6 +23,7 @@ table{border:1px solid #ddd;}
 .tabs a.current{color:#000;}
 .listing .content {width:750px;float:right;border:none;padding:0;}
 .aside {width:120px;}
+table.grid{border-collapse:collapse;}
 table.grid th,table.grid td{border:1px solid #ddd;text-align:center;}
 table.grid a{font-weight:bold;}
 td.list-time{width:250px;}

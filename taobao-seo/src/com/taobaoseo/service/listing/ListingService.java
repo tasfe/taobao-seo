@@ -18,6 +18,7 @@ import com.taobao.api.domain.Item;
 import com.taobao.api.request.ItemsOnsaleGetRequest;
 import com.taobao.api.response.ItemUpdateResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
+import com.taobaoseo.domain.listing.ListHour;
 import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.TaobaoService;
 import com.taobaoseo.taobao.TaobaoProxy;
@@ -86,9 +87,9 @@ public class ListingService {
 		return dates;
 	}
 	
-	public Map<Date, TimedItems> getHourItems(long period, String session)
+	public Map<ListHour, TimedItems> getHourItems(long period, String session)
 	{
-		Map<Date, TimedItems> hourItems = new HashMap<Date, TimedItems>();
+		Map<ListHour, TimedItems> hourItems = new HashMap<ListHour, TimedItems>();
 		try {
 			TaobaoService service = new TaobaoService();
 			List<Item> items = service.getAllOnsaleItems(session);
@@ -98,16 +99,51 @@ public class ListingService {
 				if (p == period)
 				{
 					Date listTime = item.getListTime();
-					Date hourTime = DateUtils.truncate(listTime, Calendar.HOUR_OF_DAY);
-					TimedItems tItems = hourItems.get(hourTime);
+					ListHour listHour = getListHour(listTime);
+					TimedItems tItems = hourItems.get(listHour);
 					if (tItems == null)
 					{
 						tItems = new TimedItems();
-						tItems.setTime(hourTime);
-						hourItems.put(hourTime, tItems);
+						tItems.setListHour(listHour);
+						hourItems.put(listHour, tItems);
 					}
 					tItems.addItem(item);
 				}
+			}
+		} catch (ApiException e) {
+			_logger.log(Level.SEVERE, "");
+		}
+		return hourItems;
+	}
+	
+	public Map<ListHour, TimedItems> getExpectedItems(String nick, String session)
+	{
+		Map<ListHour, TimedItems> hourItems = new HashMap<ListHour, TimedItems>();
+		try {
+			TaobaoService service = new TaobaoService();
+			List<Item> items = service.getAllOnsaleItems(session);
+			for (Item item : items)
+			{
+				Date planTime = null;
+				try {
+					planTime = ListingEngine.INSTANCE.getFireTime(item.getNumIid(), nick);
+				} catch (SchedulerException e) {
+					_logger.log(Level.SEVERE, "", e);
+				}
+				Date listTime = planTime;
+				if (listTime == null)
+				{
+					listTime = item.getListTime();
+				}
+				ListHour listHour = getListHour(listTime);
+				TimedItems tItems = hourItems.get(listHour);
+				if (tItems == null)
+				{
+					tItems = new TimedItems();
+					tItems.setListHour(listHour);
+					hourItems.put(listHour, tItems);
+				}
+				tItems.addItem(item);
 			}
 		} catch (ApiException e) {
 			_logger.log(Level.SEVERE, "");
@@ -157,5 +193,31 @@ public class ListingService {
 			cld1.add(Calendar.DATE, 7);
 		}
 		return cld1.getTime();
+	}
+	
+	public int getDayOfWeek(Date date)
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(date);
+		return cld.get(Calendar.DAY_OF_WEEK);
+	}
+	
+	public int getHour(Date date)
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(date);
+		return cld.get(Calendar.HOUR_OF_DAY);
+	}
+	
+	public ListHour getListHour(Date date)
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(date);
+		int dayOfWeek = cld.get(Calendar.DAY_OF_WEEK);
+		int hour = cld.get(Calendar.HOUR_OF_DAY);
+		ListHour listHour = new ListHour();
+		listHour.setDayOfWeek(dayOfWeek);
+		listHour.setHour(hour);
+		return listHour;
 	}
 }

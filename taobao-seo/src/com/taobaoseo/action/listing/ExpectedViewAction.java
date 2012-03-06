@@ -17,9 +17,9 @@ import com.taobaoseo.domain.listing.TimedItems;
 import com.taobaoseo.service.listing.ListingService;
 
 @Results({
-	  @Result(location="../period-view.jsp")
+	  @Result(location="../expected-view.jsp")
 })
-public class PeriodViewAction extends ActionBase{
+public class ExpectedViewAction extends ActionBase{
 
 	private int period = 7;
 	private List<Date> dates;
@@ -30,6 +30,7 @@ public class PeriodViewAction extends ActionBase{
 	
 	public String execute()
 	{
+		String nick = getUser();
 		dates = ListingService.INSTANCE.getLastDays(period);
 		if (period == 7)
 		{
@@ -66,7 +67,7 @@ public class PeriodViewAction extends ActionBase{
 			}
 		}
 		String session = getSessionId();
-		hourItems = ListingService.INSTANCE.getHourItems(period, session);
+		hourItems = ListingService.INSTANCE.getExpectedItems(nick, session);
 		System.out.println(hourItems);
 		itemsMatrix = new TimedItems[24][period];
 		itemRow = new boolean[24];
