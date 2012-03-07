@@ -36,7 +36,7 @@
 				</td>
 				<td class="list-time">
 					<div title='原上架时间'><s:date name="item.listTime" format="E HH:mm"/></div>
-					<div title='调整后上架时间'><s:date name="plannedListTime" format="E HH:mm"/></div>
+					<div class='adjust-time' title='调整后上架时间' style='color:blue;'><s:date name="plannedListTime" format="E HH:mm"/></div>
 				</td>
 				<td class="plan-time">
 					<div><s:date name="plannedListTime" format="M月d日 HH:mm"/></div>
