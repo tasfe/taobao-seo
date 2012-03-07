@@ -3,6 +3,11 @@
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
+<div>
+	<div class='left strong'><s:if test='%{expected}'>预计</s:if><s:property value="dayOfWeek"/> <s:property value="listHour.hour"/>:00 - <s:property value="listHour.hour"/>:59 上架的宝贝：</div>
+	<div class='right'><button>批量修改</button><button>批量取消</button></div>
+	<div class='clear'></div>
+</div>
 <table id="items-table" pages='<s:property value="pagingItems.totalPages" />' 
 	pageIndex='<s:property value="pagingItems.currentPage" />'
 	day-of-week='<s:property value="listHour.dayOfWeek"/>'

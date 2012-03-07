@@ -11,6 +11,7 @@ import org.quartz.JobExecutionException;
 
 import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.domain.Item;
 import com.taobao.api.request.ItemUpdateDelistingRequest;
 import com.taobao.api.request.ItemUpdateListingRequest;
 import com.taobao.api.response.ItemGetResponse;
@@ -30,12 +31,21 @@ public class ListingJob implements Job {
 		String topSession = dataMap.getString("topSession");
 		Long numIid = dataMap.getLong("numIid");
 		try {
-			ItemGetResponse rsp = TaobaoProxy.getItem(numIid, "num");
+			ItemGetResponse rsp = TaobaoProxy.getItem(numIid, "num,approve_status");
 			if (rsp.isSuccess())
 			{
-				long num = rsp.getItem().getNum();
+				Item item = rsp.getItem();
+				long num = item.getNum();
+				String status = item.getApproveStatus();
 				_logger.info("topSession: " + topSession);
-				if (delisting(numIid, topSession))
+				if ("onsale".equals(status))
+				{
+					if (delisting(numIid, topSession))
+					{
+						listing(numIid, num, topSession);
+					}
+				}
+				else
 				{
 					listing(numIid, num, topSession);
 				}

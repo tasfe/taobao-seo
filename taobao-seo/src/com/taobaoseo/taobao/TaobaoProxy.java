@@ -41,8 +41,6 @@ public class TaobaoProxy implements Constants
 	static Logger _log = Logger.getLogger(TaobaoProxy.class.getName());
 	
 	
-	private static final TaobaoClient taobaoClient = new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
-	
 	private static String getApiUrl()
 	{
 		return "http://gw.api.taobao.com/router/rest";
@@ -58,11 +56,6 @@ public class TaobaoProxy implements Constants
 		return SECRET;
 	}
 	
-	public static TaobaoClient getClient()
-	{
-		return taobaoClient;
-	}
-	
 	public static TaobaoClient createClient()
 	{
 		return new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
@@ -73,7 +66,7 @@ public class TaobaoProxy implements Constants
 		UserGetRequest req = new UserGetRequest();
 		req.setFields("user_id,uid,nick");
 		//req.setNick(nick);
-		UserGetResponse rsp = taobaoClient.execute(req, session);
+		UserGetResponse rsp = createClient().execute(req, session);
 		return rsp.getUser();
 	}
 	
@@ -82,7 +75,7 @@ public class TaobaoProxy implements Constants
 		ItemGetRequest req = new ItemGetRequest();
 		req.setFields("num_iid,title,pic_url,price");
 		req.setNumIid(numIid);
-		return taobaoClient.execute(req, session);
+		return createClient().execute(req, session);
 	}
 	
 	public static ItemGetResponse getItem(long numIid, String field) throws ApiException
@@ -90,7 +83,7 @@ public class TaobaoProxy implements Constants
 		ItemGetRequest req = new ItemGetRequest();
 		req.setFields(field);
 		req.setNumIid(numIid);
-		return taobaoClient.execute(req);
+		return createClient().execute(req);
 	}
 	
 	public static ItemsOnsaleGetResponse getOnSales(String session, long pageNumber, long pageSize, String sellerCids, String keyWord) throws ApiException
@@ -108,7 +101,7 @@ public class TaobaoProxy implements Constants
 		req.setOrderBy("list_time:desc");
 		req.setPageNo(pageNumber);
 		req.setPageSize(pageSize);
-		return taobaoClient.execute(req, session);
+		return createClient().execute(req, session);
 	}
 	
 	public static ItemsInventoryGetResponse getInventory(String sessionKey, long pageNumber, long pageSize, String banner, String sellerCids, String keyWord) throws ApiException
@@ -131,7 +124,7 @@ public class TaobaoProxy implements Constants
 		req.setPageNo(pageNumber);//default 1
 		req.setPageSize(pageSize);// default 200
 		 
-		ItemsInventoryGetResponse rsp = taobaoClient.execute(req, sessionKey);
+		ItemsInventoryGetResponse rsp = createClient().execute(req, sessionKey);
 		return rsp;
 	}
 	
@@ -140,7 +133,7 @@ public class TaobaoProxy implements Constants
 		ItemsListGetRequest req = new ItemsListGetRequest();
 		req.setFields(fields);
 		req.setNumIids(numIids);
-		return taobaoClient.execute(req, session);
+		return createClient().execute(req, session);
 	}
 	
 	public static SellercatsListGetResponse getSellerCategories(String nick) throws ApiException
@@ -149,7 +142,7 @@ public class TaobaoProxy implements Constants
 		req.setNick(nick);
 		req.setFields("cid, parent_cid, name, pic_url, sort_order");
 
-		SellercatsListGetResponse rsp = taobaoClient.execute(req);
+		SellercatsListGetResponse rsp = createClient().execute(req);
 		return rsp;
 	}
 	
@@ -216,7 +209,7 @@ public class TaobaoProxy implements Constants
 	public static ShopRemainshowcaseGetResponse getRemainShowCaseCount(String sessionKey) throws ApiException
 	{
 		ShopRemainshowcaseGetRequest req = new ShopRemainshowcaseGetRequest();
-		ShopRemainshowcaseGetResponse rsp = taobaoClient.execute(req, sessionKey);
+		ShopRemainshowcaseGetResponse rsp = createClient().execute(req, sessionKey);
 		return rsp;
 	}
 	
@@ -224,7 +217,7 @@ public class TaobaoProxy implements Constants
 	{
 		ItemRecommendAddRequest req = new ItemRecommendAddRequest();
 		req.setNumIid(numIid);
-		ItemRecommendAddResponse rsp = taobaoClient.execute(req, sessionKey);
+		ItemRecommendAddResponse rsp = createClient().execute(req, sessionKey);
 		return rsp;
 	}
 	
@@ -232,7 +225,7 @@ public class TaobaoProxy implements Constants
 	{
 		ItemRecommendDeleteRequest req = new ItemRecommendDeleteRequest();
 		req.setNumIid(numIid);
-		ItemRecommendDeleteResponse rsp = taobaoClient.execute(req, sessionKey);
+		ItemRecommendDeleteResponse rsp = createClient().execute(req, sessionKey);
 		return rsp;
 	}
 	
@@ -248,7 +241,7 @@ public class TaobaoProxy implements Constants
 		req.setOrderBy("delist_time:asc");
 		req.setPageNo(0L);
 		req.setPageSize(num);
-		return taobaoClient.execute(req, session);
+		return createClient().execute(req, session);
 	}
 	
 	public static ItemsOnsaleGetResponse getHasShowcaseItems(String session, long num) throws ApiException
@@ -259,7 +252,7 @@ public class TaobaoProxy implements Constants
 		req.setOrderBy("delist_time:desc");
 		req.setPageNo(0L);
 		req.setPageSize(num);
-		return taobaoClient.execute(req, session);
+		return createClient().execute(req, session);
 	}
 	
 	public static String getError(TaobaoResponse response)
