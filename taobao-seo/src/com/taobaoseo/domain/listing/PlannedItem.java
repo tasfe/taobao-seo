@@ -46,4 +46,25 @@ public class PlannedItem{
 		cld.setTime(item.getListTime());
 		return cld.get(Calendar.MINUTE);
 	}
+	
+	public int getPlannedDayOfWeek()
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(plannedListTime);
+		return cld.get(Calendar.DAY_OF_WEEK);
+	}
+	
+	public int getPlannedHour()
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(plannedListTime);
+		return cld.get(Calendar.HOUR_OF_DAY);
+	}
+	
+	public int getPlannedMinute()
+	{
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(plannedListTime);
+		return cld.get(Calendar.MINUTE);
+	}
 }
