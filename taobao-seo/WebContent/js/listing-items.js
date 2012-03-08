@@ -2,6 +2,12 @@
 	
 	function selectionChanged(row)
 	{
+		var $table = $("table.listing-items");
+		var selectedItems = $table.data('items');
+		if (!selectedItems)
+		{
+			selectedItems = [];
+		}
 		var num_iid = row.attr("num_iid");
 		var selected = $("input", row).attr("checked");
 		if (selected)
@@ -16,14 +22,14 @@
 		}
 		else
 		{
-			selectedItems= $.grep(selectedItems, function(a){
+			selectedItems = $.grep(selectedItems, function(a){
 				return a == num_iid;
 			}, true);
 		}
-		$(".selection").text("已选中 " + selectedItems.length + " 项");
+		$table.data('items', selectedItems);
 	}
 	
-	$("#items-table").mytable({selectionChanged: selectionChanged});
+	$("table.listing-items").mytable({selectionChanged: selectionChanged});
 	
 	$("#adjust-dialog").dialog({
 		autoOpen: false,
@@ -87,6 +93,13 @@
 			}
 		});
 		return false;
+	});
+	
+	$('button.batch-change').click(function()
+	{
+		var $table = $("table.listing-items");
+		var items = $table.data('items'); 
+		alert(items);
 	});
 	
 	function refresh($tr)
