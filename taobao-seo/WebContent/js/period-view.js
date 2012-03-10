@@ -7,11 +7,13 @@
 	
 	$("table.grid a").click(function() {
 		var url = $(this).attr('href');
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url:url,
 			success: function(data)
 			{
-				$('.listing .content').html(data);
+				$content.html(data);
 			}
 		});
 		return false;
@@ -19,18 +21,22 @@
 	
 	$('#period-form select[name="period"]').change(function(){
 		var period = $(this).val();
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url:'listing/period-view',
 			data:{period: period},
 			success: function(data)
 			{
-				$('.listing .content').html(data);
+				$content.html(data);
 			}
 		});
 	});
 	
 	
 	$('#all-to-period7').button().click(function(){
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url:'listing/change-period',
 			success: function()
@@ -40,7 +46,7 @@
 					data:{period: 7},
 					success: function(data)
 					{
-						$('.listing .content').html(data);
+						$content.html(data);
 					}
 				});
 			}
@@ -49,6 +55,8 @@
 	});
 	
 	$('#well-distribute-all').button().click(function(){
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url:'listing/well-distribute',
 			success: function()
@@ -71,6 +79,8 @@
 		var hour = $td.attr('hour');
 		var $table = $td.closest('table');
 		var expected = $table.attr('expected');
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url: 'listing/well-distribute',
 			data: {
@@ -79,7 +89,7 @@
 				expected: expected},
 			type: 'POST',
 			success: function(data){
-				$('.listing .content').html(data);
+				$content.html(data);
 			}
 		});
 		return false;

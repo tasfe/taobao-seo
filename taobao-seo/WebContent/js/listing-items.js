@@ -56,8 +56,11 @@
 			data: {numIids: numIid, dayOfWeek: dayOfWeek, time: time},
 			type: 'POST',
 			success: function(data) {
-				$tr = $editor.closest('tr');
-				refresh();
+				var $table = $("table.listing-items");
+				var dayOfWeek = $table.attr('day-of-week');
+				var hour = $table.attr('hour');
+				var expected = $table.attr('expected');
+				refresh(dayOfWeek, hour, expected);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus);
@@ -78,12 +81,18 @@
 	$('a.cancel-job').click(function(){
 		var $tr = $(this).closest("tr");
 		var numIid = $tr.attr("num_iid");
+		var $table = $("table.listing-items");
+		var dayOfWeek = $table.attr('day-of-week');
+		var hour = $table.attr('hour');
+		var expected = $table.attr('expected');
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url: 'listing/cancel-job',
 			data: {numIids: numIid},
 			type: 'POST',
 			success: function(data) {
-				refresh();
+				refresh(dayOfWeek, hour, expected);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus);
@@ -101,6 +110,8 @@
 		var dayOfWeek = $table.attr('day-of-week');
 		var hour = $table.attr('hour');
 		var expected = $table.attr('expected');
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url: 'listing/well-distribute',
 			data: {
@@ -109,7 +120,7 @@
 				expected: expected},
 			type: 'POST',
 			success: function(data) {
-				$('.listing .content').html(data);
+				$content.html(data);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus);
@@ -131,17 +142,23 @@
 	
 	$('button.batch-cancel').click(function(){
 		var $table = $("table.listing-items");
-		var items = [];
-		$('tbody tr', $table).each(function(){
-			var numIid = $(this).attr('num_iid');
-			items.push(numIid); 
-		});
+		var items = $table.data('items');
+		if (!items || items.length == 0)
+		{
+			alert('未选中任务。');
+			return false;
+		}
+		var dayOfWeek = $table.attr('day-of-week');
+		var hour = $table.attr('hour');
+		var expected = $table.attr('expected');
+		var $content = $('.listing .content');
+		window.loading.show($content);
 		$.ajax({
 			url: 'listing/cancel-job',
 			data: {numIids: items.join()},
 			type: 'POST',
 			success: function(data) {
-				refresh();
+				refresh(dayOfWeek, hour, expected);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus);
@@ -152,12 +169,9 @@
 		});
 	});
 	
-	function refresh()
+	function refresh(dayOfWeek, hour, expected)
 	{
 		var $table = $('table.listing-items');
-		var dayOfWeek = $table.attr('day-of-week');
-		var hour = $table.attr('hour');
-		var expected = $table.attr('expected');
 		$.ajax({
 			url: 'listing/hour-items',
 			data: {

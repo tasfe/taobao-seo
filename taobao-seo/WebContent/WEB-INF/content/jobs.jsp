@@ -5,10 +5,13 @@
 
 <div>
 	<div class='left strong'>所有等待执行的任务：</div>
-	<div class='right'><button>批量修改</button><button>批量取消</button></div>
+	<div class='right'>
+		<button class='batch-change'>批量修改</button>
+		<button class='batch-cancel'>批量取消</button>
+	</div>
 	<div class='clear'></div>
 </div>
-<table id="items-table" pages='<s:property value="pagingItems.totalPages" />' pageIndex='<s:property value="pagingItems.currentPage" />'>
+<table id="jobs-table" pages='<s:property value="pagingItems.totalPages" />' pageIndex='<s:property value="pagingItems.currentPage" />'>
 	<thead>
 		<tr>
 			<th><input type="checkbox" class="selector"></input>
