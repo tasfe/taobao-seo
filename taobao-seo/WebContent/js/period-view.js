@@ -50,17 +50,10 @@
 	
 	$('#well-distribute-all').button().click(function(){
 		$.ajax({
-			url:'listing/change-period',
+			url:'listing/well-distribute',
 			success: function()
 			{
-				$.ajax({
-					url:'listing/period-view',
-					data:{period: 7},
-					success: function(data)
-					{
-						$('.listing .content').html(data);
-					}
-				});
+				
 			}
 		});
 		return false;
@@ -76,9 +69,14 @@
 		var $td = $(this).closest('td');
 		var dayOfWeek = $td.attr('day-of-week');
 		var hour = $td.attr('hour');
+		var $table = $td.closest('table');
+		var expected = $table.attr('expected');
 		$.ajax({
 			url: 'listing/well-distribute',
-			data: {'listHour.dayOfWeek': dayOfWeek, 'listHour.hour': hour},
+			data: {
+				'listHour.dayOfWeek': dayOfWeek, 
+				'listHour.hour': hour,
+				expected: expected},
 			type: 'POST',
 			success: function(data){
 				$('.listing .content').html(data);

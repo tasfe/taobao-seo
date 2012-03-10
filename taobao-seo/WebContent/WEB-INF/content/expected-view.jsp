@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <div class='strong'>预期所有调整任务成功执行后的分布图：</div>
 <div class='period-view'>
-	<table class='grid'>
+	<table class='grid' expected='true'>
 		<thead>
 			<tr>
 				<th>时间</th>

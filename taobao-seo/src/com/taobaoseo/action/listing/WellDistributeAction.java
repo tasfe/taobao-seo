@@ -17,17 +17,25 @@ import com.taobaoseo.service.listing.ListingEngine;
 import com.taobaoseo.service.listing.ListingService;
 
 @Results({
-	  @Result(type="redirect", location="/listing/hour-items", params={"listHour.dayOfWeek", "${listHour.dayOfWeek}", "listHour.hour", "${listHour.hour}"})
+	  @Result(type="redirect", 
+			  location="/listing/hour-items", 
+			  params={"listHour.dayOfWeek", "${listHour.dayOfWeek}", 
+			  	"listHour.hour", "${listHour.hour}",
+			  	"expected", "${expected}"})
 })
 public class WellDistributeAction extends ActionBase{
 
 	private ListHour listHour;
+	private boolean expected;
 	
 	public String execute()
 	{
 		_log.info("hour: " + listHour);
+		String nick = getUser();
 		String session = getSessionId();
-		Map<ListHour, TimedItems> hourItemsMap = ListingService.INSTANCE.getHourItems(7, session);
+		Map<ListHour, TimedItems> hourItemsMap = 
+			expected ? ListingService.INSTANCE.getExpectedItems(nick, session) : 
+				ListingService.INSTANCE.getHourItems(7, session);
 		TimedItems hourItems = hourItemsMap.get(listHour);
 		List<Item> resultItems = hourItems.getItems();
 		int interval = 60 / resultItems.size();
@@ -36,7 +44,6 @@ public class WellDistributeAction extends ActionBase{
 		{
 			Item item = resultItems.get(i);
 			long numIid = item.getNumIid();
-			String nick = getUser();
 			String topSession = getSessionId();
 			Calendar cld = Calendar.getInstance();
 			cld.setTime(item.getListTime());
@@ -68,5 +75,13 @@ public class WellDistributeAction extends ActionBase{
 
 	public ListHour getListHour() {
 		return listHour;
+	}
+
+	public void setExpected(boolean expected) {
+		this.expected = expected;
+	}
+
+	public boolean isExpected() {
+		return expected;
 	}
 }

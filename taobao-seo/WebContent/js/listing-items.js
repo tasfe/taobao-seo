@@ -57,7 +57,7 @@
 			type: 'POST',
 			success: function(data) {
 				$tr = $editor.closest('tr');
-				refresh($tr);
+				refresh();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus);
@@ -83,7 +83,7 @@
 			data: {numIid: numIid},
 			type: 'POST',
 			success: function(data) {
-				refresh($tr);
+				refresh();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus);
@@ -95,16 +95,43 @@
 		return false;
 	});
 	
-	$('button.batch-change').click(function()
+	$('button.well-distribute').click(function()
 	{
 		var $table = $("table.listing-items");
-		var items = $table.data('items'); 
-		alert(items);
+		var dayOfWeek = $table.attr('day-of-week');
+		var hour = $table.attr('hour');
+		var expected = $table.attr('expected');
+		$.ajax({
+			url: 'listing/well-distribute',
+			data: {
+				'listHour.dayOfWeek': dayOfWeek, 
+				'listHour.hour': hour,
+				expected: expected},
+			type: 'POST',
+			success: function(data) {
+				$('.listing .content').html(data);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(textStatus);
+				var headers = jqXHR.getAllResponseHeaders();
+				alert(headers);
+				alert(errorThrown);
+			}
+		});
 	});
 	
-	function refresh($tr)
+	$('button.batch-change').click(function(){
+		var $table = $("table.listing-items");
+		var items = [];
+		$('tbody tr', $table).each(function(){
+			var numIid = $(this).attr('num_iid');
+			items.push(numIid); 
+		});
+	});
+	
+	function refresh()
 	{
-		var $table = $tr.closest('table');
+		var $table = $('table.listing-items');
 		var dayOfWeek = $table.attr('day-of-week');
 		var hour = $table.attr('hour');
 		var expected = $table.attr('expected');
