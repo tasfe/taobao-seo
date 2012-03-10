@@ -2,7 +2,7 @@
 	window.loading = {
 		show: function($content)
 		{
-			$content.html('loadding...');
+			$content.html('<img src="images/loading.gif"/>');
 		}
 	};
 	
