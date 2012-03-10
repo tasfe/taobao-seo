@@ -1,6 +1,7 @@
 package com.taobaoseo.service.listing;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -95,31 +96,40 @@ public class ListingEngine {
 		scheduler.deleteJob(new JobKey(String.valueOf(numIid), nick));
 	}
 	
-	public List<PlannedItem> getPlannedItems() throws SchedulerException
+	public void removeJobs(String[] numIids, String nick) throws SchedulerException
+	{
+		_logger.info("cancelling jobs: " + Arrays.toString(numIids) + ":" + nick);
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+		List<JobKey> jobKeys = new ArrayList<JobKey>();
+		for (String numIid : numIids)
+		{
+			jobKeys.add(JobKey.jobKey(numIid, nick));
+		}
+		scheduler.deleteJobs(jobKeys);
+	}
+	
+	public List<PlannedItem> getPlannedItems(String group) throws SchedulerException
 	{
 		List<PlannedItem> plannedItems = new ArrayList<PlannedItem>();
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		for(String group: scheduler.getJobGroupNames()) {
-		    _logger.info(group);
-		    for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(group))) {
-		        _logger.info("    " + jobKey.getName());
-		        Trigger trigger = scheduler.getTrigger(TriggerKey.triggerKey(jobKey.getName(), jobKey.getGroup()));
-		        Date fireTime = trigger.getStartTime();
-		        PlannedItem plannedItem = new PlannedItem();
-		        ItemGetResponse rsp;
-				try {
-					rsp = TaobaoProxy.getItem(Long.parseLong(jobKey.getName()), "num_iid,title,price,pic_url,list_time");
-					Item item = rsp.getItem();
-					plannedItem.setItem(item);
-			        plannedItem.setPlannedListTime(fireTime);
-			        plannedItems.add(plannedItem);
-				} catch (NumberFormatException e) {
-					_logger.log(Level.SEVERE, "", e);
-				} catch (ApiException e) {
-					_logger.log(Level.SEVERE, "", e);
-				}
-		    }
-		}
+		for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(group))) {
+	        _logger.info("    " + jobKey.getName());
+	        Trigger trigger = scheduler.getTrigger(TriggerKey.triggerKey(jobKey.getName(), jobKey.getGroup()));
+	        Date fireTime = trigger.getStartTime();
+	        PlannedItem plannedItem = new PlannedItem();
+	        ItemGetResponse rsp;
+			try {
+				rsp = TaobaoProxy.getItem(Long.parseLong(jobKey.getName()), "num_iid,title,price,pic_url,list_time");
+				Item item = rsp.getItem();
+				plannedItem.setItem(item);
+		        plannedItem.setPlannedListTime(fireTime);
+		        plannedItems.add(plannedItem);
+			} catch (NumberFormatException e) {
+				_logger.log(Level.SEVERE, "", e);
+			} catch (ApiException e) {
+				_logger.log(Level.SEVERE, "", e);
+			}
+	    }
 		Collections.sort(plannedItems, new Comparator<PlannedItem>(){
 
 			@Override

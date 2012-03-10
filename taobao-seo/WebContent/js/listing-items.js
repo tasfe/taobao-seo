@@ -80,7 +80,7 @@
 		var numIid = $tr.attr("num_iid");
 		$.ajax({
 			url: 'listing/cancel-job',
-			data: {numIid: numIid},
+			data: {numIids: numIid},
 			type: 'POST',
 			success: function(data) {
 				refresh();
@@ -126,6 +126,29 @@
 		$('tbody tr', $table).each(function(){
 			var numIid = $(this).attr('num_iid');
 			items.push(numIid); 
+		});
+	});
+	
+	$('button.batch-cancel').click(function(){
+		var $table = $("table.listing-items");
+		var items = [];
+		$('tbody tr', $table).each(function(){
+			var numIid = $(this).attr('num_iid');
+			items.push(numIid); 
+		});
+		$.ajax({
+			url: 'listing/cancel-job',
+			data: {numIids: items.join()},
+			type: 'POST',
+			success: function(data) {
+				refresh();
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(textStatus);
+				var headers = jqXHR.getAllResponseHeaders();
+				alert(headers);
+				alert(errorThrown);
+			}
 		});
 	});
 	

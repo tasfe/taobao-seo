@@ -42,7 +42,7 @@
 		var numIid = $tr.attr("num_iid");
 		$.ajax({
 			url:"listing/cancel-job",
-			data: {numIid: numIid},
+			data: {numIids: numIid},
 			success: function()
 			{
 				$tr.remove();

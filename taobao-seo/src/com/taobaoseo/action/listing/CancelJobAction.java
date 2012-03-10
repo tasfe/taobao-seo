@@ -1,5 +1,6 @@
 package com.taobaoseo.action.listing;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.quartz.SchedulerException;
@@ -13,13 +14,14 @@ import com.taobaoseo.service.listing.ListingEngine;
 })
 public class CancelJobAction extends ActionBase {
 
-	private long numIid;
+	private String numIids;
 	
 	public String execute()
 	{
 		String nick = getUser();
 		try {
-			ListingEngine.INSTANCE.remove(numIid, nick);
+			String[] numIidArray = StringUtils.split(numIids, ',');
+			ListingEngine.INSTANCE.removeJobs(numIidArray, nick);
 		} catch (SchedulerException e) {
 			error(e);
 			return ERROR;
@@ -27,11 +29,12 @@ public class CancelJobAction extends ActionBase {
 		return SUCCESS;
 	}
 
-	public void setNumIid(long numIid) {
-		this.numIid = numIid;
+	public void setNumIids(String numIids) {
+		this.numIids = numIids;
 	}
 
-	public long getNumIid() {
-		return numIid;
+	public String getNumIids() {
+		return numIids;
 	}
+
 }

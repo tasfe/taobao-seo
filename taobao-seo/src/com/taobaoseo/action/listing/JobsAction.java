@@ -20,8 +20,9 @@ public class JobsAction extends ActionBase {
 	
 	public String execute()
 	{
+		String nick = getUser();
 		try {
-			plannedItems = ListingEngine.INSTANCE.getPlannedItems();
+			plannedItems = ListingEngine.INSTANCE.getPlannedItems(nick);
 		} catch (SchedulerException e) {
 			error(e);
 			return ERROR;

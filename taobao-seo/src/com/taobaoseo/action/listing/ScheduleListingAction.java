@@ -49,10 +49,6 @@ public class ScheduleListingAction extends ActionBase{
 			cld.setTime(t);
 			int hour = cld.get(Calendar.HOUR_OF_DAY);
 			int minute = cld.get(Calendar.MINUTE);
-			if (minute == 0)
-			{
-				minute++;
-			}
 			String[] numIidArray = StringUtils.split(numIids, ',');
 			int interval = 0;
 			if (wellDistribute)
