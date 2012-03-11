@@ -2,7 +2,11 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
+<%
+	response.setHeader("Pragma","No-cache"); 
+	response.setHeader("Cache-Control","no-cache"); 
+	response.setDateHeader("Expires", 0); 
+%>
 <div>
 	<div class='left strong'><s:if test='%{expected}'>预计</s:if><s:property value="dayOfWeek"/> <s:property value="listHour.hour"/>:00 - <s:property value="listHour.hour"/>:59 上架的宝贝：</div>
 	<div class='right'>

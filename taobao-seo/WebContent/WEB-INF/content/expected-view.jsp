@@ -3,13 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%
+	response.setHeader("Pragma","No-cache"); 
+	response.setHeader("Cache-Control","no-cache"); 
+	response.setDateHeader("Expires", 0); 
+%>
 <div class='strong'>预期所有调整任务成功执行后的分布图：</div>
 <div class='period-view'>
 	<table class='grid' expected='true'>
 		<thead>
 			<tr>
 				<th>时间</th>
+				<fmt:setLocale value="zh_CN"/>
 				<c:forEach var="date" items="${dates}" varStatus='sst'>
 					<th <c:if test='${sst.index == today}'>style='color:#06C;'</c:if>>
 					<fmt:formatDate value='${date}' pattern="E"/></th>

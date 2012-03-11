@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -28,12 +27,11 @@ import com.taobao.api.response.ItemGetResponse;
 import com.taobaoseo.domain.listing.ListingJob;
 import com.taobaoseo.domain.listing.ListingJobListener;
 import com.taobaoseo.domain.listing.PlannedItem;
-import com.taobaoseo.service.recommendation.RecommendEngine;
 import com.taobaoseo.taobao.TaobaoProxy;
 
 public class ListingEngine {
 
-	static Logger _logger = Logger.getLogger(RecommendEngine.class.getName());
+	static Logger _logger = Logger.getLogger(ListingEngine.class.getName());
 
 	public static final int INTERVAL = 5;
 	
@@ -53,6 +51,7 @@ public class ListingEngine {
 	
 	public void list(long numIid, Date listTime, String nick, String topSession) throws SchedulerException
 	{
+		_logger.info("addding job...numIid: " + numIid + " listTime: " + listTime + ", nick: ");
 		String jobName = String.valueOf(numIid);
         JobDetail job = JobBuilder.newJob(ListingJob.class)
             .withIdentity(jobName, nick)
