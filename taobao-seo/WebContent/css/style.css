@@ -31,3 +31,5 @@ td.op{width:70px;}
 .period-view tbody tr td{background:#fff;}
 .period-view tbody tr.has-item td{background:#E5ECF9;}
 tbody tr.row-selected, tbody tr.row-selected td{background:rgb(255, 255, 150);}
+.listing .content td{padding:0;}
+td .tools {position:absolute;top:0;right:0;}

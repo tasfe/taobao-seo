@@ -23,7 +23,6 @@ public class ExpectedViewAction extends ActionBase{
 
 	private int period = 7;
 	private List<Date> dates;
-	private Map<ListHour, TimedItems> hourItems;
 	private TimedItems[][] itemsMatrix;
 	private boolean[] itemRow;
 	private int today;
@@ -67,7 +66,7 @@ public class ExpectedViewAction extends ActionBase{
 			}
 		}
 		String session = getSessionId();
-		hourItems = ListingService.INSTANCE.getExpectedItems(nick, session);
+		Map<ListHour, TimedItems> hourItems = ListingService.INSTANCE.getExpectedItems(nick, session);
 		System.out.println(hourItems);
 		itemsMatrix = new TimedItems[24][period];
 		itemRow = new boolean[24];

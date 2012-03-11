@@ -43,17 +43,20 @@
 			<s:iterator value='itemsMatrix' status='st'>
 				<tr <s:if test='itemRow[#st.index]'>class='has-item'</s:if>>
 					<td><s:property value="#st.index" />:00</td>
-					<s:iterator value='itemsMatrix[#st.index]' status='weekSt'>
+					<s:iterator value='itemsMatrix[#st.index]' status='weekSt' var='timedItems'>
 						<td day-of-week='<s:property value="listHour.dayOfWeek" />'
-							hour='<s:property value="listHour.hour" />'
-							style='position:relative;'>
+							hour='<s:property value="listHour.hour" />'>
+							<div style='width:100%;height:20px;position:relative;'>
 							<s:if test='%{period == 7}'>
-								<div class='tools hide' style='position:absolute;top:0;right:0;'>
-									<span title='均匀化这个时段' class='distribute-tool' style='cursor:pointer;'>=</span>
+								<div class='tools hide'>
+									<s:if test='#timedItems != null'>
+										<span title='均匀化这个时段' class='distribute-tool' style='cursor:pointer;'>=</span>
+									</s:if>
 									<span title='添加商品到这个时段' class='add-tool' style='cursor:pointer;'>+</span>
 								</div>
 							</s:if>
-							<a href='listing/hour-items?period=<s:property value='period'/>&listHour.dayOfWeek=<s:property value="listHour.dayOfWeek"/>&listHour.hour=<s:property value="listHour.hour"/>'><s:property value='itemsCount'/></a>
+							<a class='items-count' href='listing/hour-items?period=<s:property value='period'/>&listHour.dayOfWeek=<s:property value="listHour.dayOfWeek"/>&listHour.hour=<s:property value="listHour.hour"/>'><s:property value='itemsCount'/></a>
+							</div>
 						</td>
 					</s:iterator>
 				</tr>

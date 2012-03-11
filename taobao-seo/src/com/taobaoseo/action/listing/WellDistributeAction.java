@@ -37,33 +37,36 @@ public class WellDistributeAction extends ActionBase{
 			expected ? ListingService.INSTANCE.getExpectedItems(nick, session) : 
 				ListingService.INSTANCE.getHourItems(7, session);
 		TimedItems hourItems = hourItemsMap.get(listHour);
-		List<Item> resultItems = hourItems.getItems();
-		int interval = 60 / resultItems.size();
-		_log.info("interval: " + interval);
-		for (int i = 0, n = resultItems.size(); i < n; i++)
+		if (hourItems != null)
 		{
-			Item item = resultItems.get(i);
-			long numIid = item.getNumIid();
-			String topSession = getSessionId();
-			Calendar cld = Calendar.getInstance();
-			cld.setTime(item.getListTime());
-			cld.set(Calendar.DAY_OF_WEEK, listHour.getDayOfWeek());
-			cld.set(Calendar.HOUR_OF_DAY, listHour.getHour());
-			cld.set(Calendar.MINUTE, i * interval);
-			Date newListTime = cld.getTime();
-			if (newListTime.before(new Date()))
+			List<Item> resultItems = hourItems.getItems();
+			int interval = 60 / resultItems.size();
+			_log.info("interval: " + interval);
+			for (int i = 0, n = resultItems.size(); i < n; i++)
 			{
-				cld.add(Calendar.DATE, 7);
-			}
-			newListTime = cld.getTime();
-			try {
-				if (ListingEngine.INSTANCE.jobExists(numIid, nick))
+				Item item = resultItems.get(i);
+				long numIid = item.getNumIid();
+				String topSession = getSessionId();
+				Calendar cld = Calendar.getInstance();
+				cld.setTime(item.getListTime());
+				cld.set(Calendar.DAY_OF_WEEK, listHour.getDayOfWeek());
+				cld.set(Calendar.HOUR_OF_DAY, listHour.getHour());
+				cld.set(Calendar.MINUTE, i * interval);
+				Date newListTime = cld.getTime();
+				if (newListTime.before(new Date()))
 				{
-					ListingEngine.INSTANCE.remove(numIid, nick);
+					cld.add(Calendar.DATE, 7);
 				}
-				ListingEngine.INSTANCE.list(numIid, newListTime, nick, topSession);
-			} catch (SchedulerException e) {
-				error(e);
+				newListTime = cld.getTime();
+				try {
+					if (ListingEngine.INSTANCE.jobExists(numIid, nick))
+					{
+						ListingEngine.INSTANCE.remove(numIid, nick);
+					}
+					ListingEngine.INSTANCE.list(numIid, newListTime, nick, topSession);
+				} catch (SchedulerException e) {
+					error(e);
+				}
 			}
 		}
 		return SUCCESS;

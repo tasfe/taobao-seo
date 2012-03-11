@@ -27,8 +27,8 @@
 					<td><s:property value="#st.index" />:00</td>
 					<s:iterator value='itemsMatrix[#st.index]' status='weekSt'>
 						<td day-of-week='<s:property value="listHour.dayOfWeek" />'
-							hour='<s:property value="listHour.hour" />' 
-							style='position:relative;'>
+							hour='<s:property value="listHour.hour" />'>
+							<div style='width:100%;height:20px;position:relative;'>
 							<s:if test='%{period == 7}'>
 								<div class='tools hide' style='position:absolute;top:0;right:0;'>
 									<span title='均匀化这个时段' class='distribute-tool' style='cursor:pointer;'>=</span>
@@ -36,6 +36,7 @@
 								</div>
 							</s:if>
 							<a href='listing/hour-items?expected=true&period=<s:property value='period'/>&listHour.dayOfWeek=<s:property value="listHour.dayOfWeek"/>&listHour.hour=<s:property value="listHour.hour"/>'><s:property value='itemsCount'/></a>
+							</div>
 						</td>
 					</s:iterator>
 				</tr>

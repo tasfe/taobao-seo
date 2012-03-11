@@ -23,7 +23,6 @@ public class PeriodViewAction extends ActionBase{
 
 	private int period = 7;
 	private List<Date> dates;
-	private Map<ListHour, TimedItems> hourItems;
 	private TimedItems[][] itemsMatrix;
 	private boolean[] itemRow;
 	private int today;
@@ -66,7 +65,7 @@ public class PeriodViewAction extends ActionBase{
 			}
 		}
 		String session = getSessionId();
-		hourItems = ListingService.INSTANCE.getHourItems(period, session);
+		Map<ListHour, TimedItems> hourItems = ListingService.INSTANCE.getHourItems(period, session);
 		System.out.println(hourItems);
 		itemsMatrix = new TimedItems[24][period];
 		itemRow = new boolean[24];
