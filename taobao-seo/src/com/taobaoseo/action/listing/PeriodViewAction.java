@@ -99,10 +99,11 @@ public class PeriodViewAction extends ActionBase{
 		for (int i = 0; i < 24; i++)
 		{
 			System.out.println();
-			System.out.println(itemRow[i] + "\t");
+			System.out.print(i + "\t" + itemRow[i] + "\t");
 			for (int j = 0; j < period; j++)
 			{
-				System.out.print(itemsMatrix[i][j] + "\t");
+				Object o = itemsMatrix[i][j];
+				System.out.print((o == null ? null : o.getClass().getSimpleName()) + "\t");
 			}
 		}
 	}

@@ -75,13 +75,12 @@
 	
 	$('.distribute-tool').click(function(e){
 		var $td = $(this).closest('td');
-		var $itemsCount = $('a.items-count', $td);
-		if (!$itemsCount)
+		var dayOfWeek = $td.attr('day-of-week');
+		if (!dayOfWeek)
 		{
 			alert("没有在这个时间段上架或者计划上架的宝贝。");
 			return false;
 		}
-		var dayOfWeek = $td.attr('day-of-week');
 		var hour = $td.attr('hour');
 		var $table = $td.closest('table');
 		var expected = $table.attr('expected');
