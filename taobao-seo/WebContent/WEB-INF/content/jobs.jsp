@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
+<div id='jobs'>
 <div>
 	<div class='left strong'>所有等待执行的任务：</div>
 	<div class='right'>
@@ -50,7 +50,7 @@
 							<option value='7'>星期六</option>
 							<option value='1'>星期日</option>
 						</select>
-						<input value='<s:date name="plannedListTime" format="HH:mm"/>' style='width:45px;'></input>
+						<input name='time' value='<s:date name="plannedListTime" format="HH:mm"/>' style='width:45px;'></input>
 						<button class='ok'>确定</button><button class='cancel'>取消</button>
 					</div>
 				</td>
@@ -65,4 +65,8 @@
 		</s:iterator>
 	</tbody>
 </table>
+<div id="adjust-dialog" title="批量调整上架时间">
+	<s:include value="adjust-form.jsp"></s:include>
+</div>
+</div>
 <script type="text/javascript" src="js/jobs.js"></script>

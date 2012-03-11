@@ -21,6 +21,7 @@
 		<s:else>
 			<a id='well-distribute-all' class='right'>均匀化所有时段</a>
 		</s:else>
+		<div class='clear'></div>
 		</form>
 	</div>
 	<table class='grid'>

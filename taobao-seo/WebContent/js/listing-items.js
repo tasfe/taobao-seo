@@ -1,6 +1,6 @@
 (function() {
 	
-	function selectionChanged(row)
+	function selectionChanged($row)
 	{
 		var $table = $("table.listing-items");
 		var selectedItems = $table.data('items');
@@ -8,8 +8,8 @@
 		{
 			selectedItems = [];
 		}
-		var num_iid = row.attr("num_iid");
-		var selected = $("input", row).attr("checked");
+		var num_iid = $row.attr("num_iid");
+		var selected = $("input", $row).attr("checked");
 		if (selected)
 		{
 			var found = $.grep(selectedItems, function(a){
@@ -30,6 +30,8 @@
 	}
 	
 	$("table.listing-items").mytable({selectionChanged: selectionChanged});
+	
+	$('.editor input[name="time"]').timepicker({});
 	
 	$("#adjust-dialog").dialog({
 		autoOpen: false,
@@ -133,11 +135,38 @@
 	
 	$('button.batch-change').click(function(){
 		var $table = $("table.listing-items");
-		var items = [];
-		$('tbody tr', $table).each(function(){
-			var numIid = $(this).attr('num_iid');
-			items.push(numIid); 
+		var items = $table.data('items');
+		if (!items || items.length == 0)
+		{
+			alert('未选中项目。');
+			return false;
+		}
+		var dayOfWeek = $table.attr('day-of-week');
+		var hour = $table.attr('hour');
+		var expected = $table.attr('expected');
+		var $dialog = $("#adjust-dialog");
+		$dialog.dialog("option", "buttons", {
+			确定: function() {
+				var dayOfWeek = $('form select', $dialog).val();
+				var time = $('form input[name="time"]', $dialog).val();
+				$.ajax({
+					url: 'listing/schedule-listing',
+					data: {numIids: items.join(), dayOfWeek: dayOfWeek, time: time},
+					type: 'POST',
+					success: function(data){
+						$dialog.dialog('close');
+						refresh(dayOfWeek, hour, expected);
+					}
+				});
+				return false;
+			},
+			取消: function() {
+				$dialog.dialog('close');
+				return false;
+			}
 		});
+		$dialog.dialog("open");
+		return false;
 	});
 	
 	$('button.batch-cancel').click(function(){
@@ -145,7 +174,7 @@
 		var items = $table.data('items');
 		if (!items || items.length == 0)
 		{
-			alert('未选中任务。');
+			alert('未选中项目。');
 			return false;
 		}
 		var dayOfWeek = $table.attr('day-of-week');

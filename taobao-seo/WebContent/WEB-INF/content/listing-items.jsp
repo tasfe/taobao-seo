@@ -54,7 +54,7 @@
 							<option value='7'>星期六</option>
 							<option value='1'>星期日</option>
 						</select>
-						<input value='<s:date name="item.listTime" format="HH:mm"/>' style='width:45px;'></input>
+						<input name='time' value='<s:date name="item.listTime" format="HH:mm"/>' style='width:45px;'></input>
 						<button class='ok'>确定</button><button class='cancel'>取消</button>
 					</div>
 				</td>
@@ -71,6 +71,7 @@
 		</s:iterator>
 	</tbody>
 </table>
-<div id="adjust-dialog" title="调整上架时间">
+<div id="adjust-dialog" title="批量调整上架时间">
+	<s:include value="adjust-form.jsp"></s:include>
 </div>
 <script type="text/javascript" src="js/listing-items.js"></script>

@@ -30,6 +30,14 @@
 	
 	$("#jobs-table").mytable({selectionChanged: selectionChanged});
 	
+	$('.editor input[name="time"]').timepicker({});
+	
+	$("#adjust-dialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 400
+	});
+	
 	$('a.change-job-link').click(function(){
 		var $tr = $(this).closest("tr");
 		$('.editor', $tr).show();
@@ -78,6 +86,39 @@
 				$tr.remove();
 			}
 		});
+		return false;
+	});
+	
+	$('#jobs button.batch-change').click(function(){
+		var $table = $("#jobs-table");
+		var items = $table.data('items');
+		if (!items || items.length == 0)
+		{
+			alert('未选中项目。');
+			return false;
+		}
+		var $dialog = $("#adjust-dialog");
+		$dialog.dialog("option", "buttons", {
+			确定: function() {
+				var dayOfWeek = $('form select', $dialog).val();
+				var time = $('form input[name="time"]', $dialog).val();
+				$.ajax({
+					url: 'listing/schedule-listing',
+					data: {numIids: items.join(), dayOfWeek: dayOfWeek, time: time},
+					type: 'POST',
+					success: function(data){
+						$dialog.dialog('close');
+						refresh();
+					}
+				});
+				return false;
+			},
+			取消: function() {
+				$dialog.dialog('close');
+				return false;
+			}
+		});
+		$dialog.dialog("open");
 		return false;
 	});
 	

@@ -1,26 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<form>
+<form id='adjust-form'>
 	<div>
-		<img class="left"  style='margin-right:10px;' src='<s:property value="item.picUrl"/>_80x80.jpg'/>
-		<div class="left">
-			<div>标题: <s:property value="item.title"/></div>
-			<div>数量: <s:property value="item.num"/></div>
-		</div>
-		<div class='clear' style='height:10px;'></div>
-	</div>
-	<div>
-		<label>上架时间:</label><br/>
-		<span class='strong'><s:date name="item.listTime" format="yyyy-MM-dd HH:mm E"/></span>
-	</div>
-	<div>
-		<label>调整时间:</label><br/>
-		<input class="text" type="text" name="list_time" value='<s:date name="item.listTime" format="yyyy-MM-dd HH:mm E"/>'/>
+		<select>
+			<option value='2'>星期一</option>
+			<option value='3'>星期二</option>
+			<option value='4'>星期三</option>
+			<option value='5'>星期四</option>
+			<option value='6'>星期五</option>
+			<option value='7'>星期六</option>
+			<option value='1'>星期日</option>
+		</select> 
+		<input name='time' value='20:00'
+			style='width: 45px;'></input>
 	</div>
 </form>
 <script type='text/javascript'>
-$("#adjust-dialog input[name='list_time']").datetimepicker({
-	stepMinute: 5
-});
+$('#adjust-form input[name="time"]').timepicker({});
 </script>
