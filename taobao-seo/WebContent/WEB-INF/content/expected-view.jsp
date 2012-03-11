@@ -24,7 +24,7 @@
 		<tbody>
 			<s:iterator value='itemsMatrix' status='st'>
 				<tr <s:if test='itemRow[#st.index]'>class='has-item'</s:if>>
-					<td><s:property value="#st.index" />:00</td>
+					<td <s:if test='itemRow[#st.index]'>style='font-weight:bold;'</s:if>><s:property value="#st.index" />:00</td>
 					<s:iterator value='itemsMatrix[#st.index]' status='weekSt'>
 						<td day-of-week='<s:property value="listHour.dayOfWeek" />'
 							hour='<s:property value="listHour.hour" />'>
