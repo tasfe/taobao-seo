@@ -22,9 +22,6 @@
 		<s:if test='%{period == 14}'>
 			<a id='all-to-period7' class='right'>全部改为7天有效周期</a>
 		</s:if>
-		<s:else>
-			<a id='well-distribute-all' class='right'>均匀化所有时段</a>
-		</s:else>
 		<div class='clear'></div>
 		</form>
 	</div>
@@ -34,7 +31,7 @@
 				<th>时间</th>
 				<fmt:setLocale value="zh_CN"/>
 				<c:forEach var="date" items="${dates}" varStatus='sst'>
-					<th <c:if test='${sst.index == today}'>style='color:#06C;'</c:if>>
+					<th <c:if test='${sst.index == today && period == 7}'>style='color:#06C;'</c:if>>
 					<fmt:formatDate value='${date}' pattern="E"/></th>
 				</c:forEach>
 			</tr>

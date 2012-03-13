@@ -54,19 +54,6 @@
 		return false;
 	});
 	
-	$('#well-distribute-all').button().click(function(){
-		var $content = $('.listing .content');
-		window.loading.show($content);
-		$.ajax({
-			url:'listing/well-distribute',
-			success: function()
-			{
-				
-			}
-		});
-		return false;
-	});
-	
 	$('td').hover(function(){
 		$('.tools', this).show();
 	}, function(){
