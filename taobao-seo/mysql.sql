@@ -10,6 +10,14 @@ create table user_t(
     primary key (user_id_c)
 );
 
+create table list_log(
+	time_c datetime,
+	num_iid_c bigint,
+	pic_url_c varchar(255),
+	title_c varchar(255),
+	user_id_c bigint
+);
+
 create table last_listing_t(
 	num_iid_c bigint,
 	list_time_c datetime,
