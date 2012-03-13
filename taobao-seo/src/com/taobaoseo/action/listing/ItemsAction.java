@@ -69,14 +69,17 @@ public class ItemsAction extends ActionBase{
 				error(rsp);
 			}
 		}
-		_log.info("result items: " + resultItems.size());
-		_log.info("total: " + total);
 		List<PlannedItem> items = new ArrayList<PlannedItem>();
-		for (Item item : resultItems)
+		if (resultItems != null)
 		{
-			PlannedItem i = new PlannedItem();
-			i.setItem(item);
-			items.add(i);
+			_log.info("result items: " + resultItems.size());
+			_log.info("total: " + total);
+			for (Item item : resultItems)
+			{
+				PlannedItem i = new PlannedItem();
+				i.setItem(item);
+				items.add(i);
+			}
 		}
 		pagingItems = new PagingResult<PlannedItem>();
 		pagingItems.setItems(items);
