@@ -10,11 +10,12 @@ create table user_t(
     primary key (user_id_c)
 );
 
-create table list_log(
-	time_c datetime,
+create table list_log_t(
+	execute_time_c datetime,
 	num_iid_c bigint,
 	pic_url_c varchar(255),
 	title_c varchar(255),
+	old_list_time_c datetime,
 	user_id_c bigint
 );
 
