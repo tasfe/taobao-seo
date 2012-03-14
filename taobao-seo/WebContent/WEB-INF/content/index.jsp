@@ -20,7 +20,7 @@
 <body>
 <div class="container">
 	<div id="header" class="span-24 last append-bottom">
-		<div class="left">
+		<div class="left logo">
 		<img src="images/logo.png"></img>
 		</div>
 		<div class="right" style="margin-top: 5px;">

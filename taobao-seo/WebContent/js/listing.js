@@ -22,4 +22,5 @@
 		return false;
 	});
 	
+	$(".tabs>a:first-child").click();
 })();
