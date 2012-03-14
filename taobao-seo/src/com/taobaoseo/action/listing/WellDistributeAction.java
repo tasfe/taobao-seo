@@ -31,10 +31,10 @@ public class WellDistributeAction extends ActionBase{
 	public String execute()
 	{
 		_log.info("hour: " + listHour);
-		String nick = getUser();
+		long userId = getUserId();
 		String session = getSessionId();
 		Map<ListHour, TimedItems> hourItemsMap = 
-			expected ? ListingService.INSTANCE.getExpectedItems(nick, session) : 
+			expected ? ListingService.INSTANCE.getExpectedItems(userId, session) : 
 				ListingService.INSTANCE.getHourItems(7, session);
 		TimedItems hourItems = hourItemsMap.get(listHour);
 		if (hourItems != null)
@@ -42,6 +42,7 @@ public class WellDistributeAction extends ActionBase{
 			List<Item> resultItems = hourItems.getItems();
 			int interval = 60 / resultItems.size();
 			_log.info("interval: " + interval);
+			ListingEngine engine = new ListingEngine(userId);
 			for (int i = 0, n = resultItems.size(); i < n; i++)
 			{
 				Item item = resultItems.get(i);
@@ -59,11 +60,11 @@ public class WellDistributeAction extends ActionBase{
 				}
 				newListTime = cld.getTime();
 				try {
-					if (ListingEngine.INSTANCE.jobExists(numIid, nick))
+					if (engine.jobExists(numIid))
 					{
-						ListingEngine.INSTANCE.remove(numIid, nick);
+						engine.remove(numIid);
 					}
-					ListingEngine.INSTANCE.list(numIid, newListTime, nick, topSession);
+					engine.list(numIid, newListTime, topSession);
 				} catch (SchedulerException e) {
 					error(e);
 				}

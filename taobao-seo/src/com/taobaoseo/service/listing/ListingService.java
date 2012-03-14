@@ -32,7 +32,7 @@ public class ListingService {
 	
 	public static final ListingService INSTANCE = new ListingService();
 	
-	public void checkListing(String nick, String topSession) throws ApiException
+	public void checkListing(long userId, String topSession) throws ApiException
 	{
 		ItemsOnsaleGetRequest req = new ItemsOnsaleGetRequest();
 		req.setFields("num_iid,title,list_time,delist_time");
@@ -59,7 +59,8 @@ public class ListingService {
 					{
 						Date listTime = new Date(last.getListTime().getTime() + 7 * DateUtils.MILLIS_PER_DAY/total);
 						try {
-							ListingEngine.INSTANCE.list(item.getNumIid(), listTime, nick, topSession);
+							ListingEngine engine = new ListingEngine(userId);
+							engine.list(item.getNumIid(), listTime, topSession);
 						} catch (SchedulerException e) {
 							_logger.log(Level.SEVERE, "", e);
 						}
@@ -116,7 +117,7 @@ public class ListingService {
 		return hourItems;
 	}
 	
-	public Map<ListHour, TimedItems> getExpectedItems(String nick, String session)
+	public Map<ListHour, TimedItems> getExpectedItems(long userId, String session)
 	{
 		Map<ListHour, TimedItems> hourItems = new HashMap<ListHour, TimedItems>();
 		try {
@@ -126,7 +127,8 @@ public class ListingService {
 			{
 				Date planTime = null;
 				try {
-					planTime = ListingEngine.INSTANCE.getFireTime(item.getNumIid(), nick);
+					ListingEngine engine = new ListingEngine(userId);
+					planTime = engine.getFireTime(item.getNumIid());
 				} catch (SchedulerException e) {
 					_logger.log(Level.SEVERE, "", e);
 				}

@@ -18,10 +18,10 @@ public class StartAction extends ActionBase{
 	public String execute()
 	{
 		_log.info("starting...");
-		String nick = getUser();
+		long userId = getUserId();
 		String topSession = getSessionId();
 		try {
-			ListingService.INSTANCE.checkListing(nick, topSession);
+			ListingService.INSTANCE.checkListing(userId, topSession);
 		} catch (ApiException e) {
 			error(e);
 		}

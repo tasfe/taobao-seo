@@ -83,14 +83,15 @@ public class ScheduleListingAction extends ActionBase{
 			Date newListTime = ListingService.INSTANCE.calculateNewListTime(listTime, dayOfWeek, hour, minute);
 			_log.info("newListTime: " + newListTime);
 			
-			String nick = getUser();
+			long userId = getUserId();
 			String topSession = getSessionId();
 			try {
-				if (ListingEngine.INSTANCE.jobExists(numIid, nick))
+				ListingEngine engine = new ListingEngine(userId);
+				if (engine.jobExists(numIid))
 				{
-					ListingEngine.INSTANCE.remove(numIid, nick);
+					engine.remove(numIid);
 				}
-				ListingEngine.INSTANCE.list(numIid, newListTime, nick, topSession);
+				engine.list(numIid, newListTime, topSession);
 				return true;
 			} catch (SchedulerException e) {
 				error(e);

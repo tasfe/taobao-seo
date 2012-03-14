@@ -35,9 +35,9 @@ public class HourItemsAction extends ActionBase{
 			option = new PagingOption();
 		}
 		String session = getSessionId();
-		String nick = getUser();
+		long userId = getUserId();
 		Map<ListHour, TimedItems> hourItemsMap = 
-			expected ? ListingService.INSTANCE.getExpectedItems(nick, session) : ListingService.INSTANCE.getHourItems(period, session);
+			expected ? ListingService.INSTANCE.getExpectedItems(userId, session) : ListingService.INSTANCE.getHourItems(period, session);
 		TimedItems hourItems = hourItemsMap.get(listHour);
 		if (hourItems != null)
 		{
@@ -46,11 +46,12 @@ public class HourItemsAction extends ActionBase{
 			_log.info("result items: " + resultItems.size());
 			_log.info("total: " + total);
 			List<PlannedItem> items = new ArrayList<PlannedItem>();
+			ListingEngine engine = new ListingEngine(userId);
 			for (Item item : resultItems)
 			{
 				PlannedItem i = new PlannedItem();
 				i.setItem(item);
-				i.setPlannedListTime(ListingEngine.INSTANCE.getFireTime(item.getNumIid(), nick));
+				i.setPlannedListTime(engine.getFireTime(item.getNumIid()));
 				items.add(i);
 			}
 			pagingItems = new PagingResult<PlannedItem>();

@@ -1,7 +1,11 @@
 package com.taobaoseo.domain.listing;
 
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.naming.NamingException;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.quartz.Job;
@@ -17,6 +21,7 @@ import com.taobao.api.request.ItemUpdateListingRequest;
 import com.taobao.api.response.ItemGetResponse;
 import com.taobao.api.response.ItemUpdateDelistingResponse;
 import com.taobao.api.response.ItemUpdateListingResponse;
+import com.taobaoseo.db.Dao;
 import com.taobaoseo.taobao.TaobaoProxy;
 
 public class ListingJob implements Job {
@@ -29,9 +34,10 @@ public class ListingJob implements Job {
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 		String topSession = dataMap.getString("topSession");
+		Long userId = dataMap.getLong("userId");
 		Long numIid = dataMap.getLong("numIid");
 		try {
-			ItemGetResponse rsp = TaobaoProxy.getItem(numIid, "num,approve_status");
+			ItemGetResponse rsp = TaobaoProxy.getItem(numIid, "title,pic_url,list_time,num,approve_status");
 			if (rsp.isSuccess())
 			{
 				Item item = rsp.getItem();
@@ -48,6 +54,16 @@ public class ListingJob implements Job {
 				else
 				{
 					listing(numIid, num, topSession);
+				}
+				PlannedItem plannedItem = new PlannedItem();
+				plannedItem.setItem(item);
+				plannedItem.setPlannedListTime(new Date());
+				try {
+					Dao.INSTANCE.logListing(plannedItem, userId);
+				} catch (NamingException e) {
+					_logger.log(Level.SEVERE, "", e);
+				} catch (SQLException e) {
+					_logger.log(Level.SEVERE, "", e);
 				}
 			}
 			else

@@ -66,7 +66,8 @@ public class ExpectedViewAction extends ActionBase{
 			}
 		}
 		String session = getSessionId();
-		Map<ListHour, TimedItems> hourItems = ListingService.INSTANCE.getExpectedItems(nick, session);
+		long userId = getUserId();
+		Map<ListHour, TimedItems> hourItems = ListingService.INSTANCE.getExpectedItems(userId, session);
 		System.out.println(hourItems);
 		itemsMatrix = new TimedItems[24][period];
 		itemRow = new boolean[24];

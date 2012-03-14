@@ -18,10 +18,11 @@ public class CancelJobAction extends ActionBase {
 	
 	public String execute()
 	{
-		String nick = getUser();
+		long userId = getUserId();
 		try {
 			String[] numIidArray = StringUtils.split(numIids, ',');
-			ListingEngine.INSTANCE.removeJobs(numIidArray, nick);
+			ListingEngine engine = new ListingEngine(userId);
+			engine.removeJobs(numIidArray);
 		} catch (SchedulerException e) {
 			error(e);
 			return ERROR;
