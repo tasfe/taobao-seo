@@ -23,17 +23,21 @@ public class RecommendEngine {
 	public static final int INTERVAL = 5;
 	public static final String JOB_NAME = "recommend";
 	
-	public static final RecommendEngine INSTANCE = new RecommendEngine();
+	private long _userId;
 	
-	private RecommendEngine()
+	public RecommendEngine(long userId)
 	{
-		
+		_userId = userId;
 	}
 	
-	public void recommend(String nick, String topSession) throws SchedulerException
+	private String getGroup() {
+		return String.valueOf(_userId);
+	}
+	
+	public void start(String topSession) throws SchedulerException
 	{
         JobDetail job = JobBuilder.newJob(RecommendJob.class)
-            .withIdentity("recommend", nick)
+            .withIdentity("recommend", getGroup())
             .usingJobData("topSession", topSession)
             .build();
             
@@ -41,7 +45,7 @@ public class RecommendEngine {
             job.getJobDataMap().put("scope", scope);
         
         Trigger trigger = TriggerBuilder.newTrigger()
-            .withIdentity("recommend", nick)
+            .withIdentity("recommend", getGroup())
             .startNow()
             .withSchedule(SimpleScheduleBuilder.simpleSchedule()
                     .withIntervalInSeconds(INTERVAL)
@@ -51,27 +55,27 @@ public class RecommendEngine {
         scheduler.scheduleJob(job, trigger);
 	}
 	
-	public void pause(String nick) throws SchedulerException
+	public void pause() throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.pauseJob(new JobKey("recommend", nick));
+		scheduler.pauseJob(new JobKey("recommend", getGroup()));
 	}
 	
-	public void resume(String nick) throws SchedulerException
+	public void resume() throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.resumeJob(new JobKey("recommend", nick));
+		scheduler.resumeJob(new JobKey("recommend", getGroup()));
 	}
 	
-	public boolean isStarted(String nick) throws SchedulerException
+	public boolean isStarted() throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		return scheduler.getJobDetail(new JobKey("recommend", nick)) != null;
+		return scheduler.checkExists(new JobKey("recommend", getGroup()));
 	}
 	
-	public void remove(String nick) throws SchedulerException
+	public void shutDown() throws SchedulerException
 	{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		scheduler.deleteJob(new JobKey("recommend", nick));
+		scheduler.deleteJob(new JobKey("recommend", getGroup()));
 	}
 }

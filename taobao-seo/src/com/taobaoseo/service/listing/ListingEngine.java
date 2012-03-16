@@ -55,7 +55,7 @@ public class ListingEngine {
 	
 	public void list(long numIid, Date listTime, String topSession) throws SchedulerException
 	{
-		_logger.info("addding job...numIid: " + numIid + " listTime: " + listTime + ", nick: ");
+		_logger.info("addding job...numIid: " + numIid + " listTime: " + listTime);
 		String jobName = String.valueOf(numIid);
         JobDetail job = JobBuilder.newJob(ListingJob.class)
             .withIdentity(jobName, getGroup())
