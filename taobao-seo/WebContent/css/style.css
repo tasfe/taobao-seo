@@ -34,3 +34,4 @@ td.op{width:70px;}
 tbody tr.row-selected, tbody tr.row-selected td{background:rgb(255, 255, 150);}
 .period-view td{padding:0;}
 td .tools {position:absolute;top:0;right:0;}
+#recommendation-options tr td:first-child{width:120px;}

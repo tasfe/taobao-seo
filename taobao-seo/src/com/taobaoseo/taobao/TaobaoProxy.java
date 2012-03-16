@@ -140,7 +140,6 @@ public class TaobaoProxy implements Constants
 	{
 		SellercatsListGetRequest req = new SellercatsListGetRequest();
 		req.setNick(nick);
-		req.setFields("cid, parent_cid, name, pic_url, sort_order");
 
 		SellercatsListGetResponse rsp = createClient().execute(req);
 		return rsp;

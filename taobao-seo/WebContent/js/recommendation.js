@@ -40,4 +40,26 @@
 			});
 		}
 	});
+	
+	$('#recommendation-options .scope input[name="scope"]').change(function(){
+		var scope = $(this).val();
+		var form = $(this).closest('form');
+		if (scope == 2)
+		{
+			$('input[name="keyword"]', form).removeAttr('disabled');
+		}
+		else
+		{
+			$('input[name="keyword"]', form).attr('disabled', 'disabled');
+		}
+		
+		if (scope == 3)
+		{
+			$('div.item-selector', form).show();
+		}
+		else
+		{
+			$('div.item-selector', form).hide();
+		}
+	});
 })();

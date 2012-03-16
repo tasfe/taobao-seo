@@ -29,14 +29,17 @@
 						<td><label for='scope'>待推荐宝贝范围</label>
 						</td>
 						<td>
-							<div id='scope'>
-								<input type='radio' name='scope' value='1' checked='checked'>全部宝贝</input><br />
-								<input type='radio' name='scope' value='2'>指定关键字</input><br /> <input
-									type='radio' name='scope' value='3'>手动选择</input>
+							<div class='scope'>
+								<div><input type='radio' name='scope' value='1' checked='checked'>全部宝贝</input></div>
+								<div><input type='radio' name='scope' value='2'>含有关键字: </input><input name="keyword" type='text'></input></div> 
+								<div><input type='radio' name='scope' value='3'>手动选择</input></div>
+								<div class='item-selector hide'><s:include value="items-selector.jsp"/></div>
 							</div></td>
 					</tr>
 				</table>
 			</form>
+			<button>保存</button>
+			<div class='clear'></div>
 		</div>
 	</div>
 </div>

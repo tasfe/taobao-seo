@@ -11,17 +11,7 @@
 <div class='period-view'>
 	<div>
 		<form id='period-form'>
-		<span class="left strong">
-			有效周期为
-			<select name="period">
-				<option value='7' <s:if test='%{period == 7}'>selected="selected"</s:if>>7</option>
-				<option value='14' <s:if test='%{period == 14}'>selected="selected"</s:if>>14</option>
-			</select>
-			天的宝贝上架时间分布图：
-		</span>
-		<s:if test='%{period == 14}'>
-			<a id='all-to-period7' class='right'>全部改为7天有效周期</a>
-		</s:if>
+		<span class="left strong">宝贝上架时间分布图：</span>
 		<div class='clear'></div>
 		</form>
 	</div>
