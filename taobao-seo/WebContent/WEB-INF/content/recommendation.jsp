@@ -31,8 +31,10 @@
 						<td>
 							<div class='scope'>
 								<div><input type='radio' name='scope' value='1' checked='checked'>全部宝贝</input></div>
-								<div><input type='radio' name='scope' value='2'>含有关键字: </input><input name="keyword" type='text'></input></div> 
-								<div><input type='radio' name='scope' value='3'>手动选择</input></div>
+								<div><input type='radio' name='scope' value='2'>含有关键字: </input><input name="keyword" type='text'></input></div>
+								<div><input type='radio' name='scope' value='3'>类别</input></div>
+								<div class='category-selector hide'></div>
+								<div><input type='radio' name='scope' value='4'>手动选择</input></div>
 								<div class='item-selector hide'><s:include value="items-selector.jsp"/></div>
 							</div></td>
 					</tr>

@@ -6,11 +6,14 @@ public class RecommendScope implements Serializable{
 
 	public static final short TYPE_ALL = 0;
 	public static final short TYPE_KEYWORD = 1;
-	public static final short TYPE_SPECIFIED = 2;
+	public static final short TYPE_CATEGORIES = 2;
+	public static final short TYPE_SPECIFIED = 3;
 	
 	private int type = TYPE_ALL;
 	
 	private String keyword;
+	private String sellerCids;
+	private String numIids;
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
@@ -20,8 +23,6 @@ public class RecommendScope implements Serializable{
 		return keyword;
 	}
 	
-	private String numIids;
-
 	public void setItems(String numIids) {
 		this.numIids = numIids;
 	}
@@ -37,4 +38,13 @@ public class RecommendScope implements Serializable{
 	public int getType() {
 		return type;
 	}
+
+	public void setSellerCids(String sellerCids) {
+		this.sellerCids = sellerCids;
+	}
+
+	public String getSellerCids() {
+		return sellerCids;
+	}
+
 }

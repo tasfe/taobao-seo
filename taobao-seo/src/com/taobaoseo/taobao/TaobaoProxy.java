@@ -228,13 +228,28 @@ public class TaobaoProxy implements Constants
 		return rsp;
 	}
 	
-	public static ItemsOnsaleGetResponse getOldestOnSales(String session, long num, String keyWord) throws ApiException
+	public static ItemsOnsaleGetResponse getOldestOnSalesByKeyword(String keyWord, long num, String session) throws ApiException
 	{
 		ItemsOnsaleGetRequest req = new ItemsOnsaleGetRequest();
 		req.setFields("num_iid,title,pic_url,price,delist_time");
 		if (keyWord != null)
 		{
 			req.setQ(keyWord);
+		}
+		req.setHasShowcase(false);
+		req.setOrderBy("delist_time:asc");
+		req.setPageNo(0L);
+		req.setPageSize(num);
+		return createClient().execute(req, session);
+	}
+	
+	public static ItemsOnsaleGetResponse getOldestOnSalesByCategories(String sellerCids, long num, String session) throws ApiException
+	{
+		ItemsOnsaleGetRequest req = new ItemsOnsaleGetRequest();
+		req.setFields("num_iid,title,pic_url,price,delist_time");
+		if (sellerCids != null)
+		{
+			req.setSellerCids(sellerCids);
 		}
 		req.setHasShowcase(false);
 		req.setOrderBy("delist_time:asc");

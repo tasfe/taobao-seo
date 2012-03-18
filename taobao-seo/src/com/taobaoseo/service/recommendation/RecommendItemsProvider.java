@@ -30,6 +30,8 @@ public class RecommendItemsProvider {
 		{
 			case RecommendScope.TYPE_KEYWORD:
 				return getItemsByKeyword(scope.getKeyword(), session, num);
+			case RecommendScope.TYPE_CATEGORIES:
+				return getItemsByCategories(scope.getSellerCids(), session, num);
 			case RecommendScope.TYPE_SPECIFIED:
 				return getSpecifiedItems(scope.getItems(), session, num);
 			default:
@@ -40,7 +42,25 @@ public class RecommendItemsProvider {
 	private List<Item> getItemsByKeyword(String keyword, String topSession, int num)
 	{
 		try {
-			ItemsOnsaleGetResponse itemsRsp = TaobaoProxy.getOldestOnSales(topSession, num, keyword);
+			ItemsOnsaleGetResponse itemsRsp = TaobaoProxy.getOldestOnSalesByKeyword(keyword, num, topSession);
+			if (itemsRsp.isSuccess())
+			{
+				return itemsRsp.getItems();
+			}
+			else
+			{
+				_logger.log(Level.SEVERE, TaobaoProxy.getError(itemsRsp));
+			}
+		} catch (ApiException e) {
+			_logger.log(Level.SEVERE, "", e);
+		}
+		return null;
+	}
+	
+	private List<Item> getItemsByCategories(String sellerCids, String topSession, int num)
+	{
+		try {
+			ItemsOnsaleGetResponse itemsRsp = TaobaoProxy.getOldestOnSalesByCategories(sellerCids, num, topSession);
 			if (itemsRsp.isSuccess())
 			{
 				return itemsRsp.getItems();
